@@ -1,0 +1,8 @@
+# A hacky way to get my changes real time without rebuilding my project and installing it with ```pip install -e .```
+/Users/smartguy88-home/Desktop/The-WildStar-Project/Top Level Folder/Python/WildStarProject Python Package/src
+
+# I linked this file into my site packages folder with this command line:
+# ln -s /path/to/this/repo/The-WildStar-Project/.macros/my-paths.pth /Users/smartguy88-home/path/to/your/site/packages/versions/3.10.3/lib/python3.10/site-packages
+# On mac only
+# Change the paths to whatever you want
+# ln -s command makes a symlink (a pretend file that only links to a real one) that updates real time (which is great!)
