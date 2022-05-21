@@ -1,3 +1,12 @@
+## Basic .gitnore stuff
+.env
+.history
+
+## Web dev .gitignore stuff
+node_modules
+
+
+## C++ Template .gitignore
 # Prerequisites
 *.d
 
