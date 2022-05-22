@@ -51,7 +51,7 @@ void setup()
   while (io.status() < AIO_CONNECTED)
   {
     Serial.print(F(". "));
-    delay(42);
+    delay(420);
   }
 
 #ifndef DONT_USE_SERIAL
