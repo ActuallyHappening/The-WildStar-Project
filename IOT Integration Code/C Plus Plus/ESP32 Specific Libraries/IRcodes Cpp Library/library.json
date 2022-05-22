@@ -1,10 +1,10 @@
 {
   "name": "IRcodes",
   "keywords": "communication, infrared, ir, remote",
-  "description": "Identify and act upon IR commands (Smg88 Project)",
+  "description": "Identify and act upon IR commands (AHI)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ActuallyHappening/The-WildStar-Project/tree/master/Top%20Level%20Folder/C%20Plus%20Plus/Arduino%20Like%20Packages/IRcodes%20Cpp%20Library"
+    "url": "https://github.com/ActuallyHappening/The-WildStar-Project/tree/master/IOT%20Integration%20Code/C%20Plus%20Plus/ESP32%20Specific%20Libraries/IRcodes%20Cpp%20Library"
   },
   "version": "v0.0.1",
   "frameworks": "arduino",
