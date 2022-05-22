@@ -5,6 +5,8 @@
 ## Web dev .gitignore stuff
 node_modules
 
+## Custom Stuff
+*.plsgitignore*
 
 ## C++ Template .gitignore
 # Prerequisites
