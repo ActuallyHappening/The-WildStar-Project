@@ -2,7 +2,7 @@
 
 #ifdef VERSION_WARNINGS
 #define AHI_VERSION "0.0.1" // SCAN VERSION
-#warning AHI.ino version: AHI_VERSION
+#warning AHI.ino version: 0.0.1 // SCAN VERSION
 #endif
 
 #define IMPLEMENTATION
@@ -80,7 +80,7 @@ void loop()
 #ifndef DONT_USE_SERIAL
   Serial.println("(AIO DEBUG_REMOTE) Sending debug message through AIO ...");
 #endif
-  __test__->save(F('{"__metaversion__":"0.1.0","meta_structure":"EMBEDDED DEBUG_REMOTE", "payload":{"position":"AHI.ino :: loop"}}'));
+  __test__->save(F("{'__metaversion__':'0.1.0','meta_structure':'EMBEDDED DEBUG_REMOTE', 'payload':{'position':'AHI.ino :: loop'}}"));
 #endif
 #endif
 }
