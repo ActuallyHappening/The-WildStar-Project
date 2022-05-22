@@ -21,7 +21,7 @@
 
 #include <Arduino.h>
 
-#include AHI_localConfig.h
+#include "AHI_localConfig.h"
 
 #define IRCODES_INCLUDE_CANDLE
 

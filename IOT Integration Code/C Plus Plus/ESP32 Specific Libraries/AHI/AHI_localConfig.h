@@ -5,7 +5,7 @@
 // visit io.adafruit.com if you need to create an account,
 // or if you need your Adafruit IO key.
 
-#include "AHI_Secretes.plsgitignore.h"
+#include "AHI_Secrets.plsgitignore.h"
 
 #define IO_USERNAME AIO_SECRET_USERNAME
 #define IO_KEY AIO_SECRET_KEY
