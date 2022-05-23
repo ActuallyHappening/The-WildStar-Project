@@ -5,6 +5,7 @@
 #warning AHI.ino version: 0.0.1 // SCAN VERSION
 #endif
 
+// Below is the default for AHI_helper.cpp, change in AHI_helper.cpp
 #define IMPLEMENTATION
 #define INFO
 #define DEBUG
@@ -56,7 +57,7 @@ void setup()
   }
 
 #ifndef DONT_USE_SERIAL
-  print((char *)"(*AIO) * Connected to Adafruit IO *");
+  println((char *)"(*AIO)", (char *)"* Connected to Adafruit IO *");
   Serial.println(io.statusText());
   // println("(*AIO)", io.statusText()); // Need to convert from__flashStringHelper
   //  See https://forum.arduino.cc/t/convert-flash-string-to-char/564927
