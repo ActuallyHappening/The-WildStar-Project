@@ -8,9 +8,9 @@
 #define IMPLEMENTATION
 #define INFO
 #define DEBUG
-#define DEBUG_REMOTE // Means posting many unnecessary and slow debug messages over the air
+#define DEBUG_REMOTE 100 // Means posting many unnecessary and slow debug messages over the air, 100 being every 100 ticks
 
-#define POST_STATUS_REMOTE     // Means posting (unnecessary) status updates over the air
+#define REMOTE_CONTROL         // Means allowing remote control
 #define USE_AHI_DYNAMIC        // Means reassigning gpio pins
 #define USE_AHI_DYNAMIC_REMOTE // Means being able to reassign gpio pins
 
@@ -22,6 +22,7 @@
 #include <Arduino.h>
 
 #include "AHI_localConfig.h"
+#include "AHI_helper.h"
 
 #define IRCODES_INCLUDE_CANDLE
 
@@ -29,67 +30,54 @@
 
 #include <IRremote.hpp>
 
+#ifdef DEBUG_REMOTE
+int debugFrameCounter = DEBUG_REMOTE;
+#endif
+
 void setup()
 {
 #ifndef DONT_USE_SERIAL
   Serial.begin(115200);
-// while (!Serial) {;}
-#ifdef IMPLEMENTATION
-  Serial.println(F("(IMPLEMENTATION) @@ BEGIN AHI.ino setup @@"));
-#endif
-  Serial.println(F("(*SERIAL) Serial beginning in AHI.ino ..."));
+  // while (!Serial) {;}
+  implementation((char *)"(IMPLEMENTATION)", (char *)"@@ BEGIN AHI.ino setup @@");
+  println((char *)"(*SERIAL)", (char *)"Serial beginning in AHI.ino ...");
 #endif
 #ifndef DONT_USE_AIO
-  AdafruitIO_Feed *IN__test__ = io.feed("embedded.embedded-in-test");
-  AdafruitIO_Feed *TO__test__ = io.feed("embedded.embedded-to-test");
+  AdafruitIO_Feed *PutFeed = io.feed("embedded.embedded-in-test");
+  AdafruitIO_Feed *GetFeed = io.feed("embedded.embedded-to-test");
   io.connect();
 
-#ifndef DONT_USE_SERIAL
-  Serial.println(F("(*AIO) Connecting to Adafruit IO ..."));
-#endif
+  println((char *)"(*AIO)", (char *)"Connecting to Adafruit IO ...");
 
   while (io.status() < AIO_CONNECTED)
   {
-    Serial.print(F(". "));
+    Serial.print(F("."));
     delay(420);
   }
 
 #ifndef DONT_USE_SERIAL
-  Serial.print(F("(*AIO) * Connected to Adafruit IO *"));
-  Serial.print(io.statusText());
+  print((char *)"(*AIO) * Connected to Adafruit IO *");
+  Serial.println(io.statusText());
+  // println("(*AIO)", io.statusText()); // Need to convert from__flashStringHelper
+  //  See https://forum.arduino.cc/t/convert-flash-string-to-char/564927
 #endif
 #endif
-
-#ifndef DONT_USE_SERIAL
-#ifdef IMPLEMENTATION
-  Serial.println(F("(IMPLEMENTATION) @@ END AHI.ino setup @@"));
-#endif
-#endif
+  implementation((char *)"(IMPLEMENTATION)", (char *)"@@ END AHI.ino setup @@");
 }
 
 void loop()
 {
-#ifdef IMPLEMENTATION
-#ifndef DONT_USE_SERIAL
-  Serial.println(F("(IMPLEMENTATION) @@ LOOP AHI.ino loop @@"));
-#endif
-#endif
+  implementation((char *)"(IMPLEMENTATION)", (char *)"@@ LOOP AHI.ino loop @@");
+  Serial.println("Loop: " + String(debugFrameCounter));
 #ifndef DONT_USE_AIO
   io.run();
-#ifdef DEBUG_REMOTE
-#ifndef DONT_USE_SERIAL
-  Serial.println("(AIO DEBUG_REMOTE) Sending debug message through AIO ...");
-#endif
-  __test__->save(F("{'__metaversion__':'0.1.0','meta_structure':'EMBEDDED DEBUG_REMOTE', 'payload':{'position':'AHI.ino :: loop'}}"));
-#endif
+  debugFrameCounter = debug_remote((char *)"Looping ...", debugFrameCounter, DEBUG_REMOTE);
 #endif
 }
 
 void _handleAIO_TO(AdafruitIO_Data *data)
 {
-#ifndef DONT_USE_SERIAL
-  Serial.print(F("(*AIO) & Message received: "));
-  Serial.print(data->value());
-  Serial.println(F(" & "));
-#endif
+  print((char *)"(*AIO) & Message received: ");
+  print(data->value());
+  print((char *)" & \n");
 }
