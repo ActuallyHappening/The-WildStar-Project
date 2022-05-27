@@ -55,11 +55,15 @@ async def on_message(message):
     if message.author == bot.user:
         logger.debug(f"{message.author=} RECURSIVE")
         return
+    ''' for i in range(0, 6):
+        print(f"{i}: {message.content[i]}") '''
+    message.content = message.content.replace('\\"', '"')
     try:
         data = json.loads(message.content)
     except json.JSONDecodeError as exc:
         logger.debug("Message not json :)")
         logger.debug(exc)
+        logger.debug(f"{message.content}")
         return
         # raise exc
     payload = data["payload"]
