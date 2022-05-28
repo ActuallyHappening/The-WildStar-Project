@@ -1,0 +1,16 @@
+# Project Alpha __test__ __test__ (iOS)
+{\"__meta__\": { \"from\": \"Siri\", \"device\": \"iOS\", \"too\": \"Project Alpha\"}, \"payload\": { \"Project\":\"Project Alpha\", \"Action\":\"__test__\",\"Input\":\"\"}
+# Project Alpha flash_builtin int (iOS)
+{"__meta__": { "from": "Siri", "device": "iOS", "too": "Project Alpha"}, "payload": { "Project":"Project Alpha", "Action":"flash_builtin","Input":"***int***"}
+
+# Micro Python code
+def do_connect():
+    import network
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    if not wlan.isconnected():
+        print('Connecting to network...')
+        wlan.connect('yates home', 'Hannah4213')
+        while not wlan.isconnected():
+            pass
+    print('Network config:', wlan.ifconfig())

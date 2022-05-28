@@ -14,5 +14,9 @@
   ],
   "circuitpython.board.version": null,
   "circuitpython.board.vid": "0x239A",
-  "circuitpython.board.pid": "0x8019"
+  "circuitpython.board.pid": "0x8019",
+  "cSpell.words": [
+    "isconnected",
+    "passs"
+  ]
 }
