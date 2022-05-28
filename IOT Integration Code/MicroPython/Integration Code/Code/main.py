@@ -27,7 +27,7 @@ def receivedMessage(topic, msg):
     print(f"Received Command: {data}")
     payload = data["payload"]
     _project, _action, _input = payload["Project"], payload["Action"], payload["Input"]
-    execute_command(_project, _action, _input)
+    execute_command(_project, _action, _input, logger=AIO.publish)
 
 
 AIO.begin(receivedMessage)
@@ -41,4 +41,6 @@ try:
         AIO.check(debug=False)
         time.sleep(AIO.wait_interval)
 except Exception as exc:
+    print(f"Exiting main.py main loop: {exc}")
     AIO.disconnect()
+    raise exc

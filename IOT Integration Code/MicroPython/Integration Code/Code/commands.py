@@ -24,7 +24,7 @@ async def _execute(commands):
         asio.run(task)
 
 
-def execute_command(_project, _action, _input):
+def execute_command(_project, _action, _input, *, logger=print):
     global commands
     if _project == "Project Alpha":
         if _action == "flash_builtin":
@@ -34,6 +34,7 @@ def execute_command(_project, _action, _input):
                 print("$ Input given is not an integer, defaulting to 1")
                 _input = 1
             print("Executing LED Builtin Flash at {_input} per second ...")
+            logger("Executing LED Builtin Flash at {_input} per second ...")
             commands += Command(_project, _action, _input)
             _execute(commands)
 
