@@ -23,8 +23,8 @@ AIO.publish("Hello World!")
 
 try:
     while True:
-        print("Checking ...")
-        AIO.check()
+        #print("Checking ...")
+        AIO.check(debug=False)
         time.sleep(2)
 except Exception as exc:
     AIO.disconnect()

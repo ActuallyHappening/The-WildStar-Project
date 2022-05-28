@@ -59,9 +59,9 @@ def isGood(getGood=False):
 
 
 def getGoodWIFI():
-    plsConnect()
+    # plsConnect()
     while not isGood():
-        print("Top level retrying ...")
+        print("Top level attempting WIFI connect ...")
         plsConnect()
         time.sleep(1)
     print(f"Got good wifi: {wlan.ifconfig()}")

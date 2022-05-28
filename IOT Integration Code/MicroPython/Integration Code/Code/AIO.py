@@ -41,6 +41,7 @@ def checkBegin():
 
 
 def begin(callback):
+    global __begun__
     try:
         client.connect()
     except Exception as e:
@@ -66,11 +67,20 @@ def subscribe(feed="GET"):
     # client.check_msg()
 
 
-def check():
+def check(debug=False):
+    if debug:
+        print("AIO Checking for messages ...")
     client.check_msg()
 
 
+def checkBlocking(debug=False):
+    if debug:
+        print("AIO Checking for messages (blocking) ...")
+    client.wait_msg()
+
+
 def disconnect():
+    global __begun__
     if __begun__:
         print(f"Disconnecting MQTT client ...")
         client.disconnect()
