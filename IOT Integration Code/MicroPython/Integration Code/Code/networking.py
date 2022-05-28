@@ -48,7 +48,7 @@ def plsConnect():
         while not wlan.isconnected() and tryNum < 10:
             tryNum += 1
             time.sleep(1)
-            print('Connecting ... ' + tryNum)
+            print('Connecting ... ' + str(tryNum))
         return isGood(False)
 
 
@@ -59,6 +59,7 @@ def isGood(getGood=False):
 
 
 def getGoodWIFI():
+    plsConnect()
     while not isGood():
-        plsConnect()
         print("Top level retrying ...")
+        plsConnect()
