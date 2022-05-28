@@ -26,7 +26,7 @@ client_id = bytes("esp32_client_" + str(secrets.get_esp_id()), 'utf-8')
 client = MQTTClient(client_id=client_id, server=AIO_url,
                     user=AIO_username,  password=AIO_key, ssl=False)
 
-wait_interval = 0.5
+#wait_interval = 1
 
 
 def _defaultCallback(topic, msg):

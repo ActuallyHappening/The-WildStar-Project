@@ -26,6 +26,7 @@ async def _execute(commands):
 
 def execute_command(_project, _action, _input, *, logger=print):
     global commands
+    print(f"Handling Command: {_project} {_action} {_input}")
     if _project == "Project Alpha":
         if _action == "flash_builtin":
             try:
@@ -35,8 +36,9 @@ def execute_command(_project, _action, _input, *, logger=print):
                 _input = 1
             print("Executing LED Builtin Flash at {_input} per second ...")
             logger("Executing LED Builtin Flash at {_input} per second ...")
-            commands += Command(_project, _action, _input)
-            _execute(commands)
+
+            #commands += Command(_project, _action, _input)
+            # _execute(commands)
 
 
 async def blink(perSec, led):
