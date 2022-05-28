@@ -23,7 +23,7 @@ def receivedMessage(topic, msg):
         print('Beginning JSON decode ...')
         message = msg.decode('utf-8')
         print("JSON message .decoded finished ...")
-        data = json.load(message)
+        data = json.loads(message)
         print("JSON decode successful ...")
     except ValueError as exc:
         print(f"Received message is not json :( {exc}")
