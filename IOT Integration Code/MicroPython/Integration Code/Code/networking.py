@@ -61,3 +61,4 @@ def isGood(getGood=False):
 def getGoodWIFI():
     while not isGood():
         plsConnect()
+        print("Top level retrying ...")
