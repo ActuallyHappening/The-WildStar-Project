@@ -64,4 +64,8 @@ def getGoodWIFI():
         print("Top level attempting WIFI connect ...")
         plsConnect()
         time.sleep(1)
+    #print(f"Got good wifi: {wlan.ifconfig()}")
+
+
+def printStatus():
     print(f"Got good wifi: {wlan.ifconfig()}")

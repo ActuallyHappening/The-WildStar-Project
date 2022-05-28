@@ -5,7 +5,7 @@ from networking import *
 import secrets
 print("AIO.py executing ...")
 
-getGoodWIFI()
+# getGoodWIFI()
 
 AIO_username = secrets.get_AIO_username()
 AIO_key = secrets.get_AIO_key()
@@ -25,6 +25,8 @@ client_id = bytes("esp32_client_" + str(secrets.get_esp_id()), 'utf-8')
 
 client = MQTTClient(client_id=client_id, server=AIO_url,
                     user=AIO_username,  password=AIO_key, ssl=False)
+
+wait_interval = 0.5
 
 
 def _defaultCallback(topic, msg):
