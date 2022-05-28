@@ -42,7 +42,7 @@ AIO.publish("Hello World!")
 try:
     while True:
         #print("Checking ...")
-        AIO.check(debug=True)
+        AIO.check(debug=False)
         time.sleep(1)
 except Exception as exc:
     print(f"Exiting main.py main loop: {exc}")
