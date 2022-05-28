@@ -9,6 +9,11 @@ _secrets = dotenv_values(".env", verbose=True)
 aio = AIO.Client(_secrets["ADAFRUIT_IO_USERNAME"], _secrets["ADAFRUIT_IO_KEY"])
 
 
+def send(group: str, feed: str, *, data):
+    fullName = group + "." + feed
+    aio.send(fullName, data)
+
+
 @commands.command()
 async def AIOsend(ctx, group: str, feed: str, *, data):
     fullName = group + "." + feed

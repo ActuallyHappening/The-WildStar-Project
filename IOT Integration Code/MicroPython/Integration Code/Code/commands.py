@@ -19,7 +19,7 @@ async def _execute(commands):
     print("_Executing ...")
     for command in commands:
         print("\t Making Task ...")
-        asio.create_task(command.task())
+        asio.create_task(command.task(command.input))
     print("Holding tasks ...")
     await asio.sleep(10)
     print("Releasing tasks ...")
@@ -40,8 +40,8 @@ def execute_command(_project, _action, _input, *, logger=print):
             print(f"Executing LED Builtin Flash at {_input} per second ...")
             #logger(f"Executing LED Builtin Flash at {_input} per second ...")
 
-            def builtin_flash(_input):
-                blink(_input, machine.Pin(2, machine.Pin.OUT))
+            async def builtin_flash(_input):
+                await blink(_input, machine.Pin(2, machine.Pin.OUT))
 
             def builtin_flash_cleanup():
                 pin = machine.Pin(2, machine.Pin.OUT)

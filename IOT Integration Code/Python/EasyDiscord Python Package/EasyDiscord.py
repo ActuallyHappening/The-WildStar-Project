@@ -2,6 +2,7 @@ import json
 import logging
 import discord
 from discord.ext import commands
+import AIO
 
 from dotenv import dotenv_values, load_dotenv
 
@@ -55,8 +56,7 @@ async def on_message(message):
     if message.author == bot.user:
         logger.debug(f"{message.author=} RECURSIVE")
         return
-    ''' for i in range(0, 6):
-        print(f"{i}: {message.content[i]}") '''
+
     message.content = message.content.replace('\\"', '"')
     try:
         data = json.loads(message.content)
@@ -69,13 +69,16 @@ async def on_message(message):
     payload = data["payload"]
     logger.debug(f"{payload=}")
     _project, _action, _input = payload["Project"], payload["Action"], payload["Input"]
-    passOn(_project, _action, _input)
+    passOn(_project, _action, _input, ctx=message.channel)
 
 
-def passOn(project, action, _input):
+def passOn(project, action, _input, *, ctx=None):
     print(f"{project=}")
     print(f"{action=}")
     print(f"{_input=}")
+    data = {"__meta__": {"from": "discord"}, "payload": {
+        "Project": project, "Action": action, "Input": _input}}
+    AIO.send("embedded", "embedded-to-test", data=json.dumps(data))
 
 
 '''
