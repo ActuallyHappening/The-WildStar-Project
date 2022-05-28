@@ -18,7 +18,7 @@ def networkInScan(__scan):
     print("networkInScan: ", wifi_known_names)
     for s in __scan:
         detected_name = s[0]
-        print(f"Checking if {detected_name}")
+        #print(f"Checking if {detected_name}")
         if detected_name in wifi_known_names:
             return True, wifi_known_names.index(detected_name)
     return False, -1
@@ -34,16 +34,16 @@ def plsConnect():
     can, index = scanNetworks()
     if not can:
         print('Could not find any known networks :(')
-        print(scan())
+        print(f"{scan()=}")
         return False
     else:
-        print(f"{index=}")
+        # print(f"{index=}")
         wifi_name = wifi_known_names[index]
         wifi_pass = wifi_known_passs[index]
         #print(f'Found wifi: {wifi_name}; Connecting with password: {wifi_pass}')
         print(f'Found wifi: {wifi_name}; Connecting;')
         wlan.connect(wifi_name, wifi_pass)
-        print('Connecting... _')
+        #print('Connecting... _')
         tryNum = 0
         while not wlan.isconnected() and tryNum < 10:
             tryNum += 1
@@ -63,3 +63,5 @@ def getGoodWIFI():
     while not isGood():
         print("Top level retrying ...")
         plsConnect()
+        time.sleep(1)
+    print(f"Got good wifi: {wlan.ifconfig()}")

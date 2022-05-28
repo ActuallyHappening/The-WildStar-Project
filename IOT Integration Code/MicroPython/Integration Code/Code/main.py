@@ -6,10 +6,33 @@ import time
 #import network
 from networking import *
 import secrets
+import AIO
 print("YAY! main.py is executing ...")
 
 getGoodWIFI()
 
+
+def receivedMessage(topic, msg):
+    print(f"Received: {topic} ;; {msg}")
+
+
+AIO.begin(receivedMessage)
+AIO.subscribe("GET")
+AIO.subscribe("POST")
+AIO.publish("Hello World!")
+
+try:
+    while True:
+        print("Checking ...")
+        AIO.check()
+        time.sleep(2)
+except Exception as exc:
+    AIO.disconnect()
+finally:
+    AIO.disconnect()
+
+
+"""
 # the following function is the callback which is
 # called when subscribed data is received
 
@@ -79,3 +102,4 @@ while True:
         print('Ctrl-C pressed...exiting')
         client.disconnect()
         sys.exit()
+"""
