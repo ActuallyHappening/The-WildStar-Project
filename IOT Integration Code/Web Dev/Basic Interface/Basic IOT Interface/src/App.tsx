@@ -8,7 +8,10 @@ function App() {
   return (
     <div className="flex">
       <SideBar>
-        <Device __meta__={{ from: "discord" }} info={{ deviceName: "__test__" }} />
+        <Device __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 1" }} />
+        <Device __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 2" }} />
+        <Device __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 3" }} />
+        <Device __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 4" }} />
       </SideBar>
     </div >
   )

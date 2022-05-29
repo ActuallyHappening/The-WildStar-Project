@@ -7,7 +7,7 @@ const Device = ({
   info,
 }) => {
   return (
-    <div className='rounded-[50px] p-5 text-white bg-black'>
+    <div className='sidebar-icon'>
       <h1>
         {info.deviceName} Device!
       </h1>
