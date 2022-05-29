@@ -7,8 +7,11 @@ function App() {
 
   return (
     <div className="flex">
-      <SideBar><Device></Device></SideBar>
+      App:
 
+      <SideBar>
+        <Device __meta__={{ from: "discord" }}></Device>
+      </SideBar>
     </div>
   )
 }
