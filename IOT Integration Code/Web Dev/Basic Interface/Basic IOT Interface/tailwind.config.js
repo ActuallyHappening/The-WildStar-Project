@@ -7,6 +7,7 @@ module.exports = {
                 secondary: '#000066',
                 sidebartext: '#FFFFFF',
                 sidebarbg: '#006600',
+                sidebarbghover: '#00FF00',
             }
         },
     },

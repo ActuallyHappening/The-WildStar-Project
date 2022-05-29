@@ -7,4 +7,7 @@
   .sidebar-icon {
     @apply relative flex items-center justify-center h-auto w-auto mx-auto my-5 rounded-xl p-5 text-sidebartext bg-sidebarbg;
   }
+  .sidebar-icon-hovered {
+    @apply bg-sidebarbghover hover:rounded-sm hover:shadow-lg;
+  }
 }

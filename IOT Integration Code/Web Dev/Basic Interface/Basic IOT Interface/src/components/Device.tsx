@@ -7,7 +7,7 @@ const Device = ({
   info,
 }) => {
   return (
-    <div className='sidebar-icon'>
+    <div className='sidebar-icon hover:sidebar-icon-hovered'>
       <h1>
         {info.deviceName} Device!
       </h1>
