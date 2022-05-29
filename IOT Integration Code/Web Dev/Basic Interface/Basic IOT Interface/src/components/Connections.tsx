@@ -1,26 +1,34 @@
-export default function wsInit() {
-  console.log("wsInit start")
-  const ws = new WebSocket("ws://ws.bitstamp.net");
-  const __test__ = {
-    "event": "bts:subscribe",
-    "data": {
-      "channel": "live_trades_btcusd"
-    }
-  }
-  ws.onopen = () => {
-    console.log("ws.onopen")
-    ws.send(JSON.stringify(__test__))
-  }
-  ws.onmessage = function (event) {
-    const json = JSON.parse(event.data);
-    console.log(`[message] Data received from server: ${json}`);
-    try {
-      if ((json.event = "data")) {
-        console.log(json.data);
-      }
-    } catch (err) {
-      // whatever you wish to do with the err
-    }
-  };
-  return () => console.log("wsInit finish")
+import React, { FC, useEffect, useState } from 'react'
+import { io } from "socket.io-client"
+
+interface ServerConnectionProps {
+  endpoint?: string
 }
+
+const ServerConnection: FC<ServerConnectionProps> = (props) => {
+
+  //const [response, setResponse] = useState('')
+  const [time, setTime] = useState<string | number>('fetching ...')
+
+  useEffect(() => {
+    const socket = io("http://localhost:3001")
+    socket.on('connect', () => {
+      console.log('connected')
+    })
+    socket.on('connect', () => console.log(socket.id))
+    socket.on('connect_error', () => {
+      setTimeout(() => socket.connect(), 5000)
+    })
+    socket.on('time', (data) => setTime(data))
+    socket.on('disconnect', () => setTime('server disconnected'))
+  })
+
+  return (
+    <div className=''>
+      <h1>OH oh, this should never show</h1>
+      <h2>{time}</h2>
+    </div>
+  )
+}
+
+export default ServerConnection

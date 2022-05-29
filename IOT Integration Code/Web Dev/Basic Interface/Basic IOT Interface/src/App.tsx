@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ServerConnection from './components/Connections'
 import DeviceIcon from './components/Device'
 import SideBar from './components/Layout/SideBar'
 
@@ -7,6 +8,7 @@ function App() {
 
   return (
     <div className="flex">
+      <ServerConnection />
       <SideBar>
         <DeviceIcon __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 1" }} />
         <DeviceIcon __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 2" }} />

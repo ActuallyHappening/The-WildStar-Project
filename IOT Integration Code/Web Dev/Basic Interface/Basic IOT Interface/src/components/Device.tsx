@@ -3,25 +3,11 @@ import { ReactSVG } from 'react-svg'
 import BasicBoardDiagram from '../static/images/Basic Board Diagram.svg'
 import wsInit from './Connections'
 
-const DeviceConnection = (() => {
-
-
-
-  useEffect(wsInit);
-
-
-  return (
-    <div className='scale-0'>
-
-    </div>
-  )
-})
-
 const DeviceIcon = ({
   __meta__ = { from: "<from>" },//: { [from: string]: string } | null,
   info = { deviceName: "__" },
   display = { tooltip: undefined, icon: BasicBoardDiagram },
-  children = <DeviceConnection />
+  children
 }) => {
   display.tooltip = display.tooltip ?? info.deviceName
   display.icon = display.icon ?? BasicBoardDiagram
@@ -41,4 +27,3 @@ const DeviceIcon = ({
 
 
 export default DeviceIcon
-export { DeviceConnection }
