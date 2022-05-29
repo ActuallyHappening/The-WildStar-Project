@@ -16,6 +16,7 @@ const Device = ({
       </h1>
       <ReactSVG src={display.icon} />
       <span className='sidebar-icon-tooltip'>
+        Tooltip:
         {display.tooltip}
       </span>
     </div>
