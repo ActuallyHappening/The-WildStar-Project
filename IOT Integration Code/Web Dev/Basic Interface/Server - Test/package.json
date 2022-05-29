@@ -1,0 +1,15 @@
+{
+  "name": "socket-test-server",
+  "version": "1.0.0",
+  "description": "socekts and tests",
+  "main": "index.js",
+  "scripts": {
+    "test": "server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "socket.io": "^4.5.1"
+  }
+}

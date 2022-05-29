@@ -1,35 +1,14 @@
 import React, { useEffect } from 'react'
 import { ReactSVG } from 'react-svg'
 import BasicBoardDiagram from '../static/images/Basic Board Diagram.svg'
-import http from "http"
-
-//const http = require('http').createServer()
-const io = require('socket.io')(http, {
-  cors: { origin: "*" }
-})
+import wsInit from './Connections'
 
 const DeviceConnection = (() => {
-  useEffect(() => {
-    io.on('connection', (socket) => {
-      console.log('a user connected')
 
-      socket.on('message', (data) => {
-        console.log('Message Received! :: ', data)
 
-        io.emit('message', {
-          message: 'Hello World!'
-        });
-      });
 
-      socket.on('disconnect', () => {
-        console.log('user disconnected')
-      });
-    });
+  useEffect(wsInit);
 
-    http.listen(6969, () => {
-      console.log('listening on *:6969')
-    })
-  }, [])
 
   return (
     <div className='scale-0'>
@@ -55,6 +34,7 @@ const DeviceIcon = ({
       <span className='sidebar-icon-tooltip group-hover:scale-100'>
         {display.tooltip}
       </span>
+      {children}
     </div>
   )
 }
