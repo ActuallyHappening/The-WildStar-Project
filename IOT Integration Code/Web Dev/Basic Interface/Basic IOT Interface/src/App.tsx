@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Device from './components/Device'
+import DeviceIcon from './components/Device'
 import SideBar from './components/Layout/SideBar'
 
 function App() {
@@ -8,10 +8,10 @@ function App() {
   return (
     <div className="flex">
       <SideBar>
-        <Device __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 1" }} />
-        <Device __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 2" }} />
-        <Device __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 3" }} />
-        <Device __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 4" }} />
+        <DeviceIcon __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 1" }} />
+        <DeviceIcon __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 2" }} />
+        <DeviceIcon __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 3" }} />
+        <DeviceIcon __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 4" }} />
       </SideBar>
     </div >
   )
