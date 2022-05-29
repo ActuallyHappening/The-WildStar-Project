@@ -5,9 +5,12 @@
 
 @layer components {
   .sidebar-icon {
-    @apply relative flex items-center justify-center h-auto w-auto mx-auto my-5 rounded-xl p-5 text-sidebartext bg-sidebarbg;
+    @apply relative flex items-center justify-center h-auto w-auto mx-auto my-5 rounded-2xl p-5 text-sidebartext bg-sidebarbg transition-all;
   }
   .sidebar-icon-hovered {
-    @apply bg-sidebarbghover hover:rounded-sm hover:shadow-lg;
+    @apply bg-sidebarbghover hover:rounded-md hover:shadow-lg;
+  }
+  .sidebar-icon-tooltip {
+    @apply absolute top-0 left-0 z-10 w-auto h-auto bg-gray-800 text-tooltip text-xs font-bold transition-all duration-100 scale-0 origin-left;
   }
 }

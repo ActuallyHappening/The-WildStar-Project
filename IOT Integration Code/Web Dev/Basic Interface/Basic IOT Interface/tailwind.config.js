@@ -8,6 +8,7 @@ module.exports = {
                 sidebartext: '#FFFFFF',
                 sidebarbg: '#006600',
                 sidebarbghover: '#00FF00',
+                tooltip: '#FFFFFF',
             }
         },
     },
