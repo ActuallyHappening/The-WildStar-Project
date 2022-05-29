@@ -50,6 +50,13 @@ def execute_command(_project, _action, _input, *, logger=print):
                             builtin_flash, builtin_flash_cleanup))
             print(f"Commands: {commands}")
             asio.run(_execute(commands))
+        elif _action == "pin_live_byte":
+            async def pin_live_byte(_input):
+                pin = machine.Pin(int(_input), machine.Pin.OUT)
+                pin.on()
+                await asio.sleep(1)
+                pin.off()
+                await asio.sleep(1)
 
 
 async def blink(perSec, led):

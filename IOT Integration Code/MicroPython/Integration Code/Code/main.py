@@ -20,11 +20,8 @@ printStatus()
 def receivedMessage(topic, msg):
     print(f"Received from {topic}: \n{msg}")
     try:
-        print('Beginning JSON decode ...')
         message = msg.decode('utf-8')
-        print("JSON message .decoded finished ...")
         data = json.loads(message)
-        print("JSON decode successful ...")
     except ValueError as exc:
         print(f"Received message is not json :( {exc}")
         return
