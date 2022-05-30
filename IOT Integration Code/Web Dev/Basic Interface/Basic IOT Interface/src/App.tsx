@@ -8,13 +8,13 @@ function App() {
 
   return (
     <div className="flex">
-      <ServerConnection />
       <SideBar>
         <DeviceIcon __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 1" }} />
         <DeviceIcon __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 2" }} />
         <DeviceIcon __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 3" }} />
         <DeviceIcon __meta__={{ from: "discord" }} info={{ deviceName: "ESP32 - 4" }} />
       </SideBar>
+      <ServerConnection />
     </div >
   )
 }

@@ -1,27 +1,26 @@
-const express = require('express')
-const socketIo = require('socket.io')
-const http = require('http')
-const PORT = process.env.PORT || 3001
-const app = express()
-const server = http.createServer(app)
-const io = socketIo(server, {
-        cors: {
-            origin: '*'
-        }
-    }) //in case server and client run on different urls
-io.on('connection', (socket) => {
-    console.log('client connected: ', socket.id)
+const WebSocket = require('ws');
+const socket = new WebSocket('ws://localhost:6969')
 
-    socket.join('clock - room')
+socket.onopen = function(e) {
+    console.log("[open] Connection established");
+    console.log("Sending to server");
+    socket.send("My name is John");
+};
 
-    socket.on('disconnect', (reason) => {
-        console.log(reason)
-    })
-})
-setInterval(() => {
-    io.to('clock - room').emit('time', new Date())
-}, 1000)
-server.listen(PORT, err => {
-    if (err) console.log(err)
-    console.log('Server running on Port', PORT)
-})
+socket.onmessage = function(event) {
+    console.log(`[message] Data received from server: ${event.data}`);
+};
+
+socket.onclose = function(event) {
+    if (event.wasClean) {
+        console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+    } else {
+        // e.g. server process killed or network down
+        // event.code is usually 1006 in this case
+        console.log('[close] Connection died');
+    }
+};
+
+socket.onerror = function(error) {
+    console.log(`[error] ${error.message}`);
+};

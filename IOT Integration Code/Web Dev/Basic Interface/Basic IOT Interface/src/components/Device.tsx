@@ -6,7 +6,7 @@ import wsInit from './Connections'
 const DeviceIcon = ({
   __meta__ = { from: "<from>" },//: { [from: string]: string } | null,
   info = { deviceName: "__" },
-  display = { tooltip: undefined, icon: BasicBoardDiagram },
+  display = { tooltip: "No tooltip :)", icon: BasicBoardDiagram },
   children
 }) => {
   display.tooltip = display.tooltip ?? info.deviceName
