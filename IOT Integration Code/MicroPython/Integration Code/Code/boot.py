@@ -1,5 +1,6 @@
 import webrepl
-from Helper.networking import *
-getGoodWIFI()
+from Helper import networking
+networking.getGoodWIFI()
+networking.printStatus()
 
 webrepl.start()

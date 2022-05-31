@@ -1,11 +1,11 @@
 from umqtt.robust import MQTTClient
 import sys
 
-from ..networking import *
-from .. import secrets
+import networking
+import secrets
 print("AIO.py executing ...")
 
-# getGoodWIFI()
+networking.getGoodWIFI()
 
 AIO_username = secrets.get_AIO_username()
 AIO_key = secrets.get_AIO_key()
@@ -17,8 +17,7 @@ def makeFeedName(feedName):
 
 
 AIO_feeds = {
-    "POST": makeFeedName('from-test'),
-    "GET": makeFeedName('to-test')
+    "CONTROL": makeFeedName('ws-control-1'),
 }
 
 client_id = bytes("esp32_client_" + str(secrets.get_esp_id()), 'utf-8')
@@ -26,11 +25,9 @@ client_id = bytes("esp32_client_" + str(secrets.get_esp_id()), 'utf-8')
 client = MQTTClient(client_id=client_id, server=AIO_url,
                     user=AIO_username,  password=AIO_key, ssl=False)
 
-#wait_interval = 1
-
 
 def _defaultCallback(topic, msg):
-    print(f"Received: {topic} ;; {msg}")
+    print(f"Received from: {topic}:\n {msg} \n[Default Callback]")
 
 
 __begun__ = False
@@ -38,11 +35,11 @@ __begun__ = False
 
 def checkBegin():
     if not __begun__:
-        print("Implicitly Beginning ...")
+        print("Implicitly Beginning [AIO MQTT Client] ...")
         begin(_defaultCallback)
 
 
-def begin(callback):
+def begin(callback=_defaultCallback):
     global __begun__
     try:
         client.connect()
@@ -89,3 +86,7 @@ def disconnect():
         __begun__ = False
     else:
         print("Disconnected MQTT client (already)")
+
+
+end = disconnect  # Alias
+stop = disconnect  # Alias

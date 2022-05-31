@@ -3,9 +3,7 @@ import gc
 import os
 import secrets
 
-from Helper import *
-from Helper.networking import *
-from Helper.commands import execute_command
+from Helper import networking
 
 import json
 import time
@@ -13,10 +11,10 @@ from umqtt.robust import MQTTClient
 
 print("YAY! main.py is executing ...")
 
-getGoodWIFI()
-printStatus()
-"""
+networking.getGoodWIFI()
+networking.printStatus()
 
+"""
 def receivedMessage(topic, msg):
     print(f"Received from {topic}: \n{msg}")
     try:
