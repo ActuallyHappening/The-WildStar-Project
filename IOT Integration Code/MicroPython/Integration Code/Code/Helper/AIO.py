@@ -1,8 +1,8 @@
 from umqtt.robust import MQTTClient
 import sys
 
-from networking import *
-import secrets
+from ..networking import *
+from .. import secrets
 print("AIO.py executing ...")
 
 # getGoodWIFI()

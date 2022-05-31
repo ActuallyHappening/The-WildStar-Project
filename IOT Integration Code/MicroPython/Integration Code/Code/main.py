@@ -1,21 +1,21 @@
 import sys
 import gc
 import os
-from umqtt.robust import MQTTClient
-import time
-#import network
-from networking import *
 import secrets
-import AIO
-import json
-from commands import execute_command
 
+from Helper import *
+from Helper.networking import *
+from Helper.commands import execute_command
+
+import json
+import time
+from umqtt.robust import MQTTClient
 
 print("YAY! main.py is executing ...")
 
 getGoodWIFI()
 printStatus()
-
+"""
 
 def receivedMessage(topic, msg):
     print(f"Received from {topic}: \n{msg}")
@@ -45,3 +45,4 @@ except Exception as exc:
     print(f"Exiting main.py main loop: {exc}")
     AIO.disconnect()
     raise exc
+"""

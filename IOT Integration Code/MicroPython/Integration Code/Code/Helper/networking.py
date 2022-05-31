@@ -1,6 +1,7 @@
 import time
 import network
-import secrets
+
+from .. import secrets
 
 wifi_keys = secrets.get_wifi_keys()
 wifi_known_names = list(wifi_keys.keys())
