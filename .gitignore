@@ -1,6 +1,7 @@
 ## Basic .gitnore stuff
 .env
 .history
+**__pycache__**
 
 ## Web dev .gitignore stuff
 node_modules

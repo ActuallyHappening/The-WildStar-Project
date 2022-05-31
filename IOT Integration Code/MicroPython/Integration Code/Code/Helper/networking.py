@@ -1,7 +1,6 @@
 import time
 import network
-
-from .. import secrets
+import secrets
 
 wifi_keys = secrets.get_wifi_keys()
 wifi_known_names = list(wifi_keys.keys())
@@ -30,8 +29,6 @@ def scanNetworks():
 
 
 def plsConnect():
-    #global wlan
-    # wlan.active(True)
     can, index = scanNetworks()
     if not can:
         print('Could not find any known networks :(')
