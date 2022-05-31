@@ -1,14 +1,9 @@
+
 import time
 import uasyncio as asio
 
 from . import MachineCommands
-
-
-class Command():
-    def __init__(self, aDo, cleanup, name=None):
-        self.do = aDo
-        self.cleanup = cleanup
-
+from .command import Command as CommandClass
 
 prebuilt = dict()
 
@@ -21,18 +16,24 @@ def importSet(commands):
 importSet(MachineCommands.commands)
 
 
-async def execute(commands, time=10):
+async def _execute(commands, time=10):
     if type(commands) is not list:
         # Executing a single task, just put it in a list for simplicity
         commands = [commands]
     # Execute given list of commands
     print(f"## Executing ({len(commands)} num. tasks) ...")
     for command in commands:
+        if type(command) is not CommandClass:
+            print("## ERROR: Command is not of type CommandClass")
         print(
-            f"#\t  Making Task {str(command.name)+' ' if command.name is not None else ''}...")
-        asio.create_task(command.aDo())
+            f"#\t  Making Task {str(command.name)+' ' if hasattr(command,'name') else ''}...")
+        asio.create_task(command.asioDo())
     print(f"## Holding tasks ({time} seconds) ...")
     await asio.sleep(time)
     print("## Releasing tasks ...")
     for command in commands:
         command.cleanup()
+
+
+def execute(*args, **kwargs):
+    asio.run(_execute(*args, **kwargs))

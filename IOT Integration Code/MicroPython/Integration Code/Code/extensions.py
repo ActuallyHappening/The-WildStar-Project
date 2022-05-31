@@ -1,6 +1,5 @@
-import machine
-
-machine.c = {
+constants = {}
+constants["machine"] = {
     "BUILTIN": 2,
     "TEST_BUILTIN": 2,
     "TEST_RED": 13,
