@@ -38,7 +38,3 @@ commands = {
     "Seconds Logger": Command(second_logger),
     "Seconds Timer": Command(second_timer),
 }
-
-for cmd in commands.items():
-    if cmd[1].name is None:
-        cmd[1].name = cmd[0]
