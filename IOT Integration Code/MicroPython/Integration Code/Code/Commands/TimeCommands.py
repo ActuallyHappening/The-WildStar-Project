@@ -3,31 +3,30 @@ from .command import Command
 import uasyncio as asio
 
 
-async def time_interval(interval, *, callback, logger=print, forever=True, **overflow):
+async def time_interval(interval, *, asioCallback, logger=print, forever=True, **overflow):
     """
     Every interval seconds, `await callback()`;
     If `False` is returned and forever is `False`, exit / `return` from loop
     """
-    i = 0
+    __passage__ = 0  # Passage of time in seconds
     while True:
         await asio.sleep(interval)
-        i += interval
-        c = callback(__passage__=i)
-        print("values DEBUG:", i, c, forever)
-        exit = await c
-        if exit is False and forever is False:
+        __passage__ += interval
+        if await asioCallback(__passage__=__passage__) is False and forever is False:
             return
 
 
 async def time_logger(interval, *, __prefix__="Time Logged", logger=print, **kwargs):
-    await time_interval(interval=interval, callback=lambda __passage__: logger(f"{__prefix__}: {__passage__}"), forever=True, logger=logger, **kwargs)
+    async def aCallback(*, __passage__):
+        logger(f"{__prefix__}: {__passage__}")
+    await time_interval(interval=interval, asioCallback=aCallback, forever=True, logger=logger, **kwargs)
 
 
 async def time_trigger(interval, *, logger=print):
-    def callback(__passage__):
+    async def aCallback(__passage__):
         logger(f"Time Logged: {__passage__}")
         return False  # Exit since forever=False
-    await time_interval(interval=interval, callback=callback, forever=False)
+    await time_interval(interval=interval, asioCallback=aCallback, forever=False)
 
 
 async def second_logger(*, __prefix__="Seconds Logged", logger=print, **kwargs):
