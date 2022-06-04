@@ -7,7 +7,7 @@ from extensions import constants
 
 async def blink_led(led, *, period=0.5, logger=print, condition=lambda: True, **overflow):
     if len(overflow) > 0:
-      logger(f"OH oh, overflow detected in func blink_led: {overflow=}")
+        logger(f"OH oh, overflow detected in func blink_led: {overflow=}")
     print(f"blink_led called with args {led}, {period}, {logger}, {condition}")
     logger(f"Blinking LED {led} every {period} seconds")
     while condition():
@@ -44,9 +44,9 @@ async def blink_blue(**kwargs):
     await blink_pin(constants["machine"]["TEST_BLUE"], **kwargs)
 
 commands = {
-    "Blink Builtin": Command(blink_builtin, lambda: None, "Blink Builtin"),
-    "Blink Red": Command(blink_red, lambda: None, "Blink Red"),
-    "Blink Yellow": Command(blink_yellow, lambda: None, "Blink Yellow"),
-    "Blink Green": Command(blink_green, lambda: None, "Blink Green"),
-    "Blink Blue": Command(blink_blue, lambda: None, "Blink Blue"),
+    "Blink Builtin": Command(blink_builtin),
+    "Blink Red": Command(blink_red),
+    "Blink Yellow": Command(blink_yellow),
+    "Blink Green": Command(blink_green),
+    "Blink Blue": Command(blink_blue),
 }
