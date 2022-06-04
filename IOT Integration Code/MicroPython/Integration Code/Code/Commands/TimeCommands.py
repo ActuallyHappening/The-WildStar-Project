@@ -6,13 +6,14 @@ import uasyncio as asio
 async def time_interval(interval, *, callback, logger=print, forever=True, **overflow):
     """
     Every interval seconds, `await callback()`;
-    If `false` is returned and forever is `false`, exit / `return` from loop
+    If `False` is returned and forever is `False`, exit / `return` from loop
     """
     i = 0
     while True:
         await asio.sleep(interval)
         i += interval
         c = callback(__passage__=i)
+        print("values DEBUG:", i, c, forever)
         exit = await c
         if exit is False and forever is False:
             return
