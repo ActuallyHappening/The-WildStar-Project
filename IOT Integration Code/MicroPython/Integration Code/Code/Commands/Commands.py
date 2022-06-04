@@ -12,6 +12,8 @@ prebuilt = dict()
 def importSet(commands):
     for name, command in commands.items():
         prebuilt[name] = command
+        if command.name is None:
+            command.name = name  # Set name of command to handle used to call it :)
 
 
 importSet(MachineCommands.commands)
