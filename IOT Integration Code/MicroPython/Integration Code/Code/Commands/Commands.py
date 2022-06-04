@@ -3,6 +3,7 @@ import time
 import uasyncio as asio
 
 from . import MachineCommands
+from . import TimeCommands
 from .command import Command as CommandClass
 
 prebuilt = dict()
@@ -14,6 +15,7 @@ def importSet(commands):
 
 
 importSet(MachineCommands.commands)
+importSet(TimeCommands.commands)
 
 
 async def _execute(commands, time=10):
@@ -25,8 +27,9 @@ async def _execute(commands, time=10):
     for command in commands:
         if type(command) is not CommandClass:
             print("## ERROR: Command is not of type CommandClass")
+            continue
         print(
-            f"#\t  Making Task {str(command.name)+' ' if hasattr(command,'name') else ''}...")
+            f"#\t  Making Task {str(command.name)+' ' if hasattr(command,'name') else '__'}...")
         asio.create_task(command.asioDo())
     print(f"## Holding tasks ({time} seconds) ...")
     await asio.sleep(time)
