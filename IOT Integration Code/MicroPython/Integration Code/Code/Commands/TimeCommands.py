@@ -28,11 +28,11 @@ async def time_trigger(interval, *, logger=print):
 
 
 async def second_logger(*, __prefix__="Seconds Logged", logger=print, **kwargs):
-    await time_logger(interval=1, callback=lambda __passage__: logger(f"{__prefix__}: {__passage__}"), logger=logger, **kwargs)
+    await time_logger(interval=1, __prefix__=__prefix__, logger=logger, **kwargs)
 
 
 async def second_timer(*, __prefix__="Second Triggered", logger=print, **kwargs):
-    await time_trigger(interval=1, callback=lambda __passage__: logger(f"{__prefix__}: {__passage__}"), logger=logger, **kwargs)
+    await time_trigger(interval=1, __prefix__=__prefix__, logger=logger, **kwargs)
 
 commands = {
     "Seconds Logger": Command(second_logger),
