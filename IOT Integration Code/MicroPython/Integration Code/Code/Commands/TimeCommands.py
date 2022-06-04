@@ -12,7 +12,8 @@ async def time_interval(interval, *, callback, logger=print, forever=True, **ove
     while True:
         asio.sleep(interval)
         i += interval
-        if await callback(__passage__=i) and forever:
+        exit = await callback(__passage__=i)
+        if exit and forever:
             return
 
 
