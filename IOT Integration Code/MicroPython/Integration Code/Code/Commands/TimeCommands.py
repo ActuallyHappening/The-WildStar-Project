@@ -10,7 +10,7 @@ async def time_interval(interval, *, callback, logger=print, forever=True, **ove
     """
     i = 0
     while True:
-        asio.sleep(interval)
+        await asio.sleep(interval)
         i += interval
         c = callback(__passage__=i)
         exit = await c
