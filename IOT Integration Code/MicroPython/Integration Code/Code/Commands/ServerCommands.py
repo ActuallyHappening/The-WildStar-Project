@@ -30,8 +30,9 @@ async def request_execute_command(request):
         _time = 5
         if "time" in request.args:
             _time = request.args["time"]
+        print(f"### Executing task {requested_command.name}")
         Commands.execute(requested_command, time=int(_time))
-        print("## Returning control to ServerCommands ...")
+        print("### Returning control to ServerCommands ...")
         return "GOOD executed task!"
     else:
         return "Error Code 40something\nUnknown options, use `.../execute-command/?prebuilt=Blink Builtin`\nWOW this API is COOL AS F**K!"
