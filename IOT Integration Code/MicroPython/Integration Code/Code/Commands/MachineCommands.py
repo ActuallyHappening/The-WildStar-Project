@@ -8,7 +8,8 @@ from extensions import constants
 async def blink_led(led, *, period=0.5, logger=print, finishState=False, **overflow):
     if len(overflow) > 0:
         logger(f"OH oh, overflow detected in func blink_led: {overflow=}")
-    print(f"blink_led called with args {led}, {period}, {logger}, {condition}")
+    print(
+        f"blink_led called with args {led=}, {period=}, {logger=}, {finishState=}")
     logger(f"Blinking LED {led} every {period} seconds")
     try:
         while True:
