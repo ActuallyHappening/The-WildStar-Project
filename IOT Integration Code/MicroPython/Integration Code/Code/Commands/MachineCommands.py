@@ -10,7 +10,7 @@ async def blink_led(led, *, period=0.5, logger=print, finishState=False, **overf
         logger(f"OH oh, overflow detected in func blink_led: {overflow=}")
     print(
         f"blink_led called with args {led=}, {period=}, {logger=}, {finishState=}")
-    logger(f"Blinking LED {led} every {period} seconds")
+    logger(f"Blinking LED {led=} every {period=} seconds")
     try:
         while True:
             led.on()
@@ -23,13 +23,13 @@ async def blink_led(led, *, period=0.5, logger=print, finishState=False, **overf
 
 
 async def blink_pin(number, **kwargs):
-    print(f"blink_pin called with args {number}, {kwargs}")
+    print(f"blink_pin called with args {number=}, {kwargs=}")
     led = machine.Pin(number, machine.Pin.OUT)
     await blink_led(led, **kwargs)
 
 
 async def blink_builtin(**kwargs):
-    print(f"blink_builtin called with args {kwargs}")
+    print(f"blink_builtin called with args {kwargs=}")
     await blink_pin(constants["machine"]["TEST_BUILTIN"], **kwargs)
 
 
