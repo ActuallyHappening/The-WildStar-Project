@@ -22,7 +22,7 @@ importSet(TimeCommands.commands)
 importSet(ServerCommands.commands)
 
 
-async def _execute(commands, *, time=10, leeWay=2, **overflow):
+async def _execute(commands, *, time=10, **overflow):
     if len(overflow) > 0:
         print(f"OH oh, overflow detected in func _execute: {overflow=}")
     if type(commands) is not list:
@@ -30,20 +30,17 @@ async def _execute(commands, *, time=10, leeWay=2, **overflow):
         commands = [commands]
     # Execute given list of commands
     print(f"## Executing ({len(commands)} num. tasks) ...")
+    gathered = []
     for command in commands:
         if type(command) is not CommandClass:
             print("## ERROR: Command is not of type CommandClass")
             continue
         print(
-            f"#\t  Making Task {str(command.name)+' ' if hasattr(command,'name') else '__'}...")
-        asio.create_task(command.asioDo())
+            f"#\tMaking Task {str(command.name)+' ' if hasattr(command,'name') else '__'}...")
+        gathered.append(command.asioDo())
     print(f"## Holding tasks ({time} seconds) ...")
-    await asio.sleep(time)
-    print(f"## Leeway for {leeWay} ...")
-    await asio.sleep(leeWay)
-    print("## Releasing tasks ...")
-    for command in commands:
-        command.cleanup()
+    await asio.gather(gathered)
+    print("## Released tasks.")
 
 
 def execute(*args, **kwargs):

@@ -39,17 +39,23 @@ async def request_execute_command(request):
 
 
 async def asio_start_server():
-    await asio_app.start_server(host='0.0.0.0', port=420, debug=True)
+    try:
+        await asio_app.start_server(host='0.0.0.0', port=420, debug=True)
+    finally:
+        asio_app.shutdown()
 
 
 def start_server():
-    app.run(host='0.0.0.0', port=420, debug=True)
+    try:
+        app.run(host='0.0.0.0', port=420, debug=True)
+    finally:
+        app.shutdown()
 
 
 commands = {
-    "npm run dev --async": Command(asio_start_server, lambda: asio_app.shutdown()),
-    "npm run dev": Command(start_server, lambda: app.shutdown()),
-    "npm run dev --sync": Command(start_server, lambda: app.shutdown()),
+    "npm run dev --async": Command(asio_start_server),
+    "npm run dev": Command(asio_start_server),
+    "npm run dev --sync": Command(start_server),
 }
 
 if __name__ == "__main__":
