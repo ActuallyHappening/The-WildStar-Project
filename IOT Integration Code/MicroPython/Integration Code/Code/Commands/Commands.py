@@ -4,6 +4,7 @@ import uasyncio as asio
 
 from . import MachineCommands
 from . import TimeCommands
+from . import ServerCommands
 from .command import Command as CommandClass
 
 prebuilt = dict()
@@ -18,6 +19,7 @@ def importSet(commands):
 
 importSet(MachineCommands.commands)
 importSet(TimeCommands.commands)
+importSet(ServerCommands.commands)
 
 
 async def _execute(commands, time=10, *, leeWay=1):
