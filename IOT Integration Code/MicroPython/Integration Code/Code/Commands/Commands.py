@@ -30,16 +30,14 @@ async def _execute(commands, *, time=10, **overflow):
         commands = [commands]
     # Execute given list of commands
     print(f"## Executing ({len(commands)} num. tasks) ...")
-    gathered = []
     for command in commands:
         if type(command) is not CommandClass:
             print("## ERROR: Command is not of type CommandClass")
             continue
         print(
             f"#\tMaking Task {str(command.name)+' ' if hasattr(command,'name') else '__'}...")
-        gathered.append(command.asioDo())
     print(f"## Holding tasks ({time} seconds) ...")
-    await asio.gather(gathered)
+    await asio.gather(*[task.asioDo() for task in commands])
     print("## Released tasks.")
 
 
