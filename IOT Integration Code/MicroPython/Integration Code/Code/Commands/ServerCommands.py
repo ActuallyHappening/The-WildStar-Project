@@ -30,7 +30,7 @@ async def request_execute_command(request):
         _time = 5
         if "time" in request.args:
             _time = request.args["time"]
-        await Commands._execute(requested_command, time=_time)
+        await Commands._execute(requested_command, time=int(_time))
         print("## Returning control to ServerCommands ...")
         return "GOOD executed task!"
     else:
