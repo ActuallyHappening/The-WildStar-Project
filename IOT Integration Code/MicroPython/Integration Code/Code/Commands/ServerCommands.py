@@ -47,7 +47,7 @@ async def request_execute_command(request):
 
 
 @app.route(f"{API_CONST}/find-commands/<str:command_name>")
-@asio_app.route(f"{API_CONST}/find-commands/<str:command_name>")
+@asio_app.route(f"{API_CONST}/find-commands/<string:command_name>")
 async def request_find_commands(request, *, command_name="*"):
     print(f"##! Command requested ...")
     if command_name == "*":
