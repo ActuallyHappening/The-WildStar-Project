@@ -31,9 +31,8 @@ async def __commandQueueTask():
     try:
         while True:
             if len(commandQueue) > 0:
-                for task in commandQueue:
-                    Commands.execute(task[0], *task[1], **task[2])
-                commandQueue.clear()
+                task = commandQueue.pop(0)
+                Commands.execute(task[0], *task[1], **task[2])
             await asio.sleep(__queuePollPeriod)
             if __queueStop:
                 __queueStop = False
