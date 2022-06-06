@@ -37,7 +37,7 @@ async def _execute(commands, time=..., **overflow):
             f"#\tMaking Task {str(command.name)+' ' if hasattr(command,'name') else '__'}...")
     if time is ...:
         print(f"#> Note: {time=}, is not set, running until completion")
-    print(f"## Holding tasks ({time} seconds) ...")
+    print(f"## Holding tasks ({time=} seconds) ...")
     await asio.gather(*[command.asioDo(time=time) for command in commands])
     print("## Released tasks.")
 

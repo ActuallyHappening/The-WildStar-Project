@@ -3,7 +3,7 @@ from microdot import Microdot
 from microdot_asyncio import Microdot as asio_Microdot
 import secrets
 from . import Commands
-from .command import Command, _timeoutWrapper
+from .command import Command, _timeoutWrapper, timeoutWrapper
 
 app = Microdot()
 asio_app = asio_Microdot()
@@ -27,11 +27,11 @@ async def request_execute_command(request):
     print("## Command requested ...")
     if "prebuilt" in request.args:
         requested_command = Commands.prebuilt[request.args["prebuilt"]]
-        _time = 5
+        _time = ...
         if "time" in request.args:
-            _time = request.args["time"]
+            _time = int(request.args["time"])
         print(f"### Executing task {requested_command.name}")
-        Commands.execute(requested_command, time=int(_time))
+        Commands.execute(requested_command, time=_time)
         print("### Returning control to ServerCommands ...")
         return "GOOD executed task!"
     else:
@@ -45,7 +45,7 @@ async def asio_start_server():
     finally:
         asio_app.shutdown()
 
-
+@timeoutWrapper
 def start_server():
     try:
         app.run(host='0.0.0.0', port=420, debug=True)
