@@ -41,16 +41,21 @@ async def request_execute_command(request):
 @_timeoutWrapper
 async def asio_start_server():
     try:
+        print(f"Starting microdot server --async ...")
         await asio_app.start_server(host='0.0.0.0', port=420, debug=True)
     finally:
         asio_app.shutdown()
+        print(f"#>\tShutdown microdot server --async")
+
 
 @timeoutWrapper
 def start_server():
     try:
+        print(f"#>\tStarting microdot server --sync ...")
         app.run(host='0.0.0.0', port=420, debug=True)
     finally:
         app.shutdown()
+        print(f"#>\tShutdown microdot server --sync ...")
 
 
 commands = {
