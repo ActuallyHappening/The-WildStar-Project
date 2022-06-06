@@ -26,6 +26,8 @@ async def dump(request, methods=["GET"]):
 async def request_execute_command(request):
     print("## Command requested ...")
     if "prebuilt" in request.args:
+        if request.args["prebuilt"] not in Commands.prebuilt:
+            return f"Error Code 50something\nUnknown command {request.args['prebuilt']=}"
         requested_command = Commands.prebuilt[request.args["prebuilt"]]
         _time = 5
         if "time" in request.args:
@@ -42,6 +44,19 @@ async def request_execute_command(request):
         return f"GOOD executed task! For {_time=}"
     else:
         return "Error Code 40something\nUnknown options, use `.../execute-command/?prebuilt=Blink Builtin`\nWOW this API is COOL AS F**K!"
+
+
+@app.route(f"{API_CONST}/find-commands/<str:command_name>")
+@asio_app.route(f"{API_CONST}/find-commands/<str:command_name>")
+async def request_find_commands(request, *, command_name="*"):
+    print(f"##! Command requested ...")
+    if command_name == "*":
+        return json.dumps({"commands": Commands.prebuilt})
+    else:
+        try:
+            return json.dumps({"commands": Commands.prebuilt[command_name]})
+        except KeyError:
+            return f"Error Code 50something\nUnknown command {command_name=}"
 
 
 @_timeoutWrapper
