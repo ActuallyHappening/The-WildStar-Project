@@ -26,10 +26,13 @@ async def dump(request, methods=["GET"]):
 
 
 async def __commandQueueTask():
+    global __queueStop
+    global commandQueue
     try:
         while True:
             if len(commandQueue) > 0:
-                Commands.execute(commandQueue)
+                for task in commandQueue:
+                    Commands.execute(task[0], *task[1], **task[2])
                 commandQueue.clear()
             await asio.sleep(__queuePollPeriod)
             if __queueStop:
@@ -52,7 +55,7 @@ async def request_execute_command(request):
         else:
             print(f"#>\tDefaulting to {_time=}")
         print(f"### Queueing task {requested_command.name}")
-        commandQueue.append(requested_command)
+        commandQueue.append([requested_command, [], {"time": _time}])
         return f"GOOD queued {requested_command =} for {_time =}"
     else:
         return "Error Code 40something\nUnknown options, use `.../execute-command/?prebuilt=Blink Builtin`\nWOW this API is COOL AS F**K!"
