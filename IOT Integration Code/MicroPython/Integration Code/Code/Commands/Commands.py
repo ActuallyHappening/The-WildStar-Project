@@ -15,11 +15,11 @@ prebuilt = dict()
 async def _timeoutWrapper(coroutine):
     async def __timeoutWrapper(*_args, time=..., **_kwargs):
         if time is not ...:
-            await asio.wait_for(coroutine(*_args, *_kwargs), timeout=time)
+            await asio.wait_for(coroutine(*_args, **_kwargs), timeout=time)
         else:
             print(
                 f"#>\tRunning __timeoutWrapper with no given time, defaulting to asio.gather(...)")
-            await asio.gather(coroutine(*_args, *_kwargs))
+            await asio.gather(coroutine(*_args, **_kwargs))
     return __timeoutWrapper
 
 
