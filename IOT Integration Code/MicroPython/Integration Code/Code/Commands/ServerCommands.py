@@ -5,7 +5,7 @@ import secrets
 from . import Commands
 from .command import Command, _timeoutWrapper, timeoutWrapper
 
-#app = Microdot()
+app = Microdot()
 asio_app = asio_Microdot()
 
 API_CONST = "/api/v1"
@@ -14,14 +14,14 @@ _test = json.dumps({"__meta__": {"from": f"<ESP32 id:{secrets.get_esp_id()}",
                    "to": "receiver", "device": "ESP32"}, "payload": {}})
 
 
-# @app.route('/')
+@app.route('/')
 @asio_app.route('/')
 async def dump(request, methods=["GET"]):
     print("YIPEE!")
     return _test
 
 
-# @app.route(f"{API_CONST}/execute-command/")
+@app.route(f"{API_CONST}/execute-command/")
 @asio_app.route(f'{API_CONST}/execute-command/')
 async def request_execute_command(request):
     print("## Command requested ...")
@@ -48,22 +48,18 @@ async def asio_start_server():
         print(f"#>\tShutdown microdot server --async")
 
 
-''' @timeoutWrapper
+@timeoutWrapper
 def start_server():
     try:
         print(f"#>\tStarting microdot server --sync ...")
         app.run(host='0.0.0.0', port=420, debug=True)
     finally:
         app.shutdown()
-        print(f"#>\tShutdown microdot server --sync ...") '''
+        print(f"#>\tShutdown microdot server --sync ...")
 
 
 commands = {
     "npm run dev --async": Command(asio_start_server),
     "npm run dev": Command(asio_start_server),
-    # "npm run dev --sync": Command(start_server),
+    "npm run dev --sync": Command(start_server),
 }
-
-if __name__ == "__main__":
-    print("Running Server (imported) ...")
-    Commands.execute(commands["npm run dev --async"])
