@@ -1,3 +1,4 @@
+from Commands import Commands as cmds
 import sys
 import gc
 import os
@@ -7,12 +8,15 @@ from Helper import networking
 
 import json
 import time
-from umqtt.robust import MQTTClient
+#from umqtt.robust import MQTTClient
 
 print("YAY! main.py is executing ...")
 
 networking.getGoodWIFI()
 networking.printStatus()
+
+cmds.execute(cmds.prebuilt["npm run dev"])
+
 
 """
 def receivedMessage(topic, msg):

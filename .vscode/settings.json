@@ -10,7 +10,8 @@
   "python.analysis.extraPaths": [
     "/Users/smartguy88-home/.vscode/extensions/joedevivo.vscode-circuitpython-0.1.17-darwin-x64/boards/0x239A/0x8019",
     "/Users/smartguy88-home/.vscode/extensions/joedevivo.vscode-circuitpython-0.1.17-darwin-x64/stubs",
-    "/Users/smartguy88-home/Library/Application Support/Code/User/globalStorage/joedevivo.vscode-circuitpython/bundle/20220524/adafruit-circuitpython-bundle-py-20220524/lib"
+    "/Users/smartguy88-home/Library/Application Support/Code/User/globalStorage/joedevivo.vscode-circuitpython/bundle/20220524/adafruit-circuitpython-bundle-py-20220524/lib",
+    "./IOT Integration Code/MicroPython/Integration Code/WebServer Code?/microdot.plsgitignore/tests/libs"
   ],
   "circuitpython.board.version": null,
   "circuitpython.board.vid": "0x239A",

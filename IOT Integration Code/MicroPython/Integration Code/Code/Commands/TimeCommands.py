@@ -1,8 +1,9 @@
 import time
-from .command import Command
+from .command import Command, _timeoutWrapper
 import uasyncio as asio
 
 
+@_timeoutWrapper
 async def time_interval(interval, *, asioCallback, logger=print, forever=True, **overflow):
     """
     Every interval seconds, `await callback()`;
