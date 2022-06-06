@@ -35,9 +35,9 @@ async def request_execute_command(request):
         print(f"### Executing task {requested_command.name}")
         try:
             Commands.execute(requested_command, time=_time)
-        except:
+        except OSError as exc:
             print(
-                f"#< request_execute_command with {API_CONST=} closed (...)")
+                f"#< request_execute_command with {API_CONST=} closed ({exc=})")
         print("### Returning control to ServerCommands ...")
         return f"GOOD executed task! For {_time=}"
     else:
