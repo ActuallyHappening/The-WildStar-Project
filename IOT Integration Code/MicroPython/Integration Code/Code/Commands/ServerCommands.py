@@ -1,8 +1,10 @@
 import json
+import re
 import uasyncio as asio
 from microdot import Microdot
 from microdot_asyncio import Microdot as asio_Microdot
 import secrets
+from extensions import _dict_add
 from . import Commands
 from .command import Command, _timeoutWrapper, timeoutWrapper
 
@@ -10,9 +12,11 @@ app = asio_Microdot()
 
 API_CONST = "/api/v1.0"
 
-
-_test = json.dumps({"__meta__": {"from": f"<ESP32 id:{secrets.get_esp_id()}",
-                   "to": "receiver", "device": "ESP32"}, "payload": {}})
+META_FROM_CONST = f"<ESP32 id:{secrets.get_esp_id()}"
+META_TO_CONST = f"receiver"
+META_DEVICE_CONST = f"ESP32 API"
+META_DEFAULT = {"from": META_FROM_CONST,
+                "to": META_TO_CONST, "device": META_DEVICE_CONST}
 
 commandQueue = []
 __queuePollPeriod = 5
@@ -22,7 +26,7 @@ __queueStop = False
 @app.route('/')
 async def dump(request, methods=["GET"]):
     print("YIPEE!")
-    return _test
+    return json.dumps({"__meta__": META_DEFAULT, "payload": {"ping": "pong"}})
 
 
 async def __commandQueueTask():
@@ -55,21 +59,28 @@ async def request_execute_command(request):
             print(f"#>\tDefaulting to {_time=}")
         print(f"### Queueing task {requested_command.name}")
         commandQueue.append([requested_command, [], {"time": _time}])
-        return f"GOOD queued {requested_command =} for {_time =}"
+        return json.dumps({"__meta__": META_DEFAULT, "payload": {"status": "queued", "time": _time, "requested_command.name": requested_command.name}})
     else:
         return "Error Code 40something\nUnknown options, use `.../execute-command/?prebuilt=Blink Builtin`\nWOW this API is COOL AS F**K!"
 
 
-@app.route(f"{API_CONST}/find-commands/<string:command_name>")
-async def request_find_commands(request, *, command_name="*"):
-    print(f"##! Command requested ...")
-    if command_name == "*":
-        return json.dumps({"commands": Commands.prebuilt})
+@app.route(f"{API_CONST}/search-commands/<string:search>")
+async def request_find_commands(request, *, search="*"):
+    print(f"##! Command search requested ...")
+    if search == "*":
+        return json.dumps({"__meta__": META_DEFAULT, "payload": {"commands": Commands.prebuilt}})
     else:
         try:
-            return json.dumps({"commands": Commands.prebuilt[command_name]})
-        except KeyError:
-            return f"Error Code 50something\nUnknown command {command_name=}"
+            search = re.compile(search)
+        except Exception as exc:
+            return f"Error Code 60something\nInvalid search regex: {exc}"
+        try:
+            return json.dumps({"__meta__": META_DEFAULT, "payload": {"matches":
+                                                                     [Commands.prebuilt[index] for index in Commands.prebuilt.keys(
+                                                                     ) if re.match(search, Commands.prebuilt.name)]
+                                                                     }})
+        except Exception as exc:
+            return json.dumps({"__meta__": _dict_add(META_DEFAULT, {"error": "Unknown Server Error", "error_exc": f"{exc=}"}), "payload": {"matches": []}})
 
 
 @_timeoutWrapper

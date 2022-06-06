@@ -7,3 +7,9 @@ constants["machine"] = {
     "TEST_GREEN": 14,
     "TEST_BLUE": 27
 }
+
+
+def _dict_add(d1, d2):
+    tmp = d1.copy()
+    tmp.update(d2)
+    return tmp
