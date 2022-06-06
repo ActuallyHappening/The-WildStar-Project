@@ -27,13 +27,15 @@ async def request_execute_command(request):
     print("## Command requested ...")
     if "prebuilt" in request.args:
         requested_command = Commands.prebuilt[request.args["prebuilt"]]
-        _time = ...
+        _time = 5
         if "time" in request.args:
             _time = int(request.args["time"])
+        else:
+            print(f"#>\tDefaulting to {_time=}")
         print(f"### Executing task {requested_command.name}")
         Commands.execute(requested_command, time=_time)
         print("### Returning control to ServerCommands ...")
-        return "GOOD executed task!"
+        return f"GOOD executed task! For {_time=}"
     else:
         return "Error Code 40something\nUnknown options, use `.../execute-command/?prebuilt=Blink Builtin`\nWOW this API is COOL AS F**K!"
 
