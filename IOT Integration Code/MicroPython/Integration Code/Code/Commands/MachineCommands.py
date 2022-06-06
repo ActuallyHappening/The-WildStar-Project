@@ -1,10 +1,11 @@
 import machine
 import uasyncio as asio
 
-from .command import Command
+from .command import Command, _timeoutWrapper
 from extensions import constants
 
 
+@_timeoutWrapper
 async def blink_led(led, *, period=0.5, logger=print, finishState=False, **overflow):
     if len(overflow) > 0:
         logger(f"OH oh, overflow detected in func blink_led: {overflow=}")

@@ -3,7 +3,7 @@ from microdot import Microdot
 from microdot_asyncio import Microdot as asio_Microdot
 import secrets
 from . import Commands
-from .command import Command
+from .command import Command, _timeoutWrapper
 
 app = Microdot()
 asio_app = asio_Microdot()
@@ -38,6 +38,7 @@ async def request_execute_command(request):
         return "Error Code 40something\nUnknown options, use `.../execute-command/?prebuilt=Blink Builtin`\nWOW this API is COOL AS F**K!"
 
 
+@_timeoutWrapper
 async def asio_start_server():
     try:
         await asio_app.start_server(host='0.0.0.0', port=420, debug=True)
