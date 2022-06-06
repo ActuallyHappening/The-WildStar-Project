@@ -52,7 +52,7 @@ async def request_execute_command(request):
         else:
             print(f"#>\tDefaulting to {_time=}")
         print(f"### Queueing task {requested_command.name}")
-        __commandQueueTask.queue.append(requested_command)
+        __commandQueueTask.append(requested_command)
         return f"GOOD queued {requested_command =} for {_time =}"
     else:
         return "Error Code 40something\nUnknown options, use `.../execute-command/?prebuilt=Blink Builtin`\nWOW this API is COOL AS F**K!"
