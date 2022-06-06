@@ -35,7 +35,7 @@ async def request_execute_command(request):
         print(f"### Executing task {requested_command.name}")
         try:
             Commands.execute(requested_command, time=_time)
-        except Exception as exc:
+        except Exception as exc:  # Dangerous, will update to use socket.timeout TODO
             print(
                 f"#< request_execute_command with {API_CONST=} closed ({exc=})")
         print("### Returning control to ServerCommands ...")
