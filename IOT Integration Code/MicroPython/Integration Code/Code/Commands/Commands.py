@@ -21,7 +21,7 @@ importSet(TimeCommands.commands)
 importSet(ServerCommands.commands)
 
 
-async def _execute(commands, time=..., **overflow):
+async def _execute(commands, *, time=..., **overflow):
     if len(overflow) > 0:
         print(f"OH oh, overflow detected in func _execute: {overflow=}")
     if type(commands) is not list:

@@ -1,30 +1,47 @@
 import json
+import uasyncio as asio
 from microdot import Microdot
 from microdot_asyncio import Microdot as asio_Microdot
 import secrets
 from . import Commands
 from .command import Command, _timeoutWrapper, timeoutWrapper
 
-app = Microdot()
-asio_app = asio_Microdot()
+app = asio_Microdot()
 
-API_CONST = "/api/v1"
+API_CONST = "/api/v1.0"
+
 
 _test = json.dumps({"__meta__": {"from": f"<ESP32 id:{secrets.get_esp_id()}",
                    "to": "receiver", "device": "ESP32"}, "payload": {}})
 
+commandQueue = []
+__queuePollPeriod = 5
+__queueStop = False
+
 
 @app.route('/')
-@asio_app.route('/')
 async def dump(request, methods=["GET"]):
     print("YIPEE!")
     return _test
 
 
-@app.route(f"{API_CONST}/execute-command/")
-@asio_app.route(f'{API_CONST}/execute-command/')
+async def __commandQueueTask():
+    try:
+        while True:
+            if len(commandQueue) > 0:
+                Commands.execute(commandQueue)
+                commandQueue.clear()
+            await asio.sleep(__queuePollPeriod)
+            if __queueStop:
+                __queueStop = False
+                break
+    except Exception as exc:
+        print(f"#<\t__commandQueueTask Stopped: {exc}")
+
+
+@app.route(f'{API_CONST}/execute-command/')
 async def request_execute_command(request):
-    print("## Command requested ...")
+    print("## Command queue request ...")
     if "prebuilt" in request.args:
         if request.args["prebuilt"] not in Commands.prebuilt:
             return f"Error Code 50something\nUnknown command {request.args['prebuilt']=}"
@@ -34,20 +51,14 @@ async def request_execute_command(request):
             _time = int(request.args["time"])
         else:
             print(f"#>\tDefaulting to {_time=}")
-        print(f"### Executing task {requested_command.name}")
-        try:
-            Commands.execute(requested_command, time=_time)
-        except Exception as exc:  # Dangerous, will update to use socket.timeout TODO
-            print(
-                f"#< request_execute_command with {API_CONST=} closed ({exc=})")
-        print("### Returning control to ServerCommands ...")
-        return f"GOOD executed task! For {_time=}"
+        print(f"### Queueing task {requested_command.name}")
+        __commandQueueTask.queue.append(requested_command)
+        return f"GOOD queued {requested_command =} for {_time =}"
     else:
         return "Error Code 40something\nUnknown options, use `.../execute-command/?prebuilt=Blink Builtin`\nWOW this API is COOL AS F**K!"
 
 
 @app.route(f"{API_CONST}/find-commands/<string:command_name>")
-@asio_app.route(f"{API_CONST}/find-commands/<string:command_name>")
 async def request_find_commands(request, *, command_name="*"):
     print(f"##! Command requested ...")
     if command_name == "*":
@@ -60,27 +71,15 @@ async def request_find_commands(request, *, command_name="*"):
 
 
 @_timeoutWrapper
-async def asio_start_server():
+async def start_server():
     try:
         print(f"#>\tStarting microdot server --async ...")
-        await asio_app.start_server(host='0.0.0.0', port=420, debug=True)
+        await asio.gather(__commandQueueTask(), app.start_server(host='0.0.0.0', port=420, debug=True))
     finally:
-        asio_app.shutdown()
+        app.shutdown()
         print(f"#>\tShutdown microdot server --async")
 
 
-@timeoutWrapper
-def start_server():
-    try:
-        print(f"#>\tStarting microdot server --sync ...")
-        app.run(host='0.0.0.0', port=420, debug=True)
-    finally:
-        app.shutdown()
-        print(f"#>\tShutdown microdot server --sync ...")
-
-
 commands = {
-    "npm run dev --async": Command(asio_start_server),
-    "npm run dev": Command(asio_start_server),
-    "npm run dev --sync": Command(start_server),
+    "npm run dev": Command(start_server),
 }

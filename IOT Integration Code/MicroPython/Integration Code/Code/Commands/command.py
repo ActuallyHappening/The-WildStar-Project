@@ -7,6 +7,18 @@ class Command():
         self.cleanup = cleanup
         self.name = name
 
+    def __str__(self):
+        if self.name is None:
+            return f"Command(...)"
+        else:
+            return f"Command(..., name={self.name})"
+
+    def __repr__(self):
+        if self.name is None:
+            return f"Command(...)"
+        else:
+            return f"Command(..., name={self.name})"
+
 
 def _timeoutWrapper(coroutine):
     async def __timeoutWrapper(*_args, time=..., **_kwargs):
