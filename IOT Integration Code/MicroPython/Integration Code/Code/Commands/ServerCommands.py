@@ -34,7 +34,11 @@ async def request_execute_command(request):
             print(f"#>\tDefaulting to {_time=}")
         print(f"### Executing task {requested_command.name}")
         Commands.execute(requested_command, time=_time)
-        print("### Returning control to ServerCommands ...")
+        try:
+            print("### Returning control to ServerCommands ...")
+        except TimeoutError as exc:
+            print(
+                f"#< request_execute_command with {API_CONST=} closed ({exc=})")
         return f"GOOD executed task! For {_time=}"
     else:
         return "Error Code 40something\nUnknown options, use `.../execute-command/?prebuilt=Blink Builtin`\nWOW this API is COOL AS F**K!"
