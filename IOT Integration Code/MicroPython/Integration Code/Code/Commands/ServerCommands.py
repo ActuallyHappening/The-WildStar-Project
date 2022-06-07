@@ -64,7 +64,7 @@ async def request_execute_command(request):
         return "Error Code 40something\nUnknown options, use `.../execute-command/?prebuilt=Blink Builtin`\nWOW this API is COOL AS F**K!"
 
 
-@app.route(f"{API_CONST}/search-commands/<string:search>")
+@app.route(f"{API_CONST}/search-commands/<re:search>")
 async def request_find_commands(request, *, search="*"):
     print(f"##! Command search requested ...")
     if search == "*":
