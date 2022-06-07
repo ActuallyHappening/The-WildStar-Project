@@ -10,7 +10,7 @@ from .command import Command, _timeoutWrapper, timeoutWrapper
 
 app = asio_Microdot()
 
-API_CONST = "/api/v1.0"
+API_CONST = "/api/v1.1"
 
 META_FROM_CONST = f"<ESP32 id:{secrets.get_esp_id()}"
 META_TO_CONST = f"receiver"
@@ -45,13 +45,13 @@ async def __commandQueueTask():
         print(f"#<\t__commandQueueTask Stopped: {exc}")
 
 
-@app.route('/api/v__meta__/', methods=["GET"])
+@app.route('/api/v__meta__', methods=["GET"])
 async def dump_all(request):
     return json.dumps({"__meta__": META_DEFAULT, "payload": {"__version__": API_CONST, "routes": [x for x in app.url_map]}})
 
 
-@app.route(f'{API_CONST}/execute-command/')
-async def request_execute_command(request):
+@app.route(f'{API_CONST}/execute-command/<string:command_name>')
+async def request_execute_command(request, *, command_name=Commands.prebuilt[...]):
     print("## Command queue request ...")
     if "prebuilt" in request.args:
         if request.args["prebuilt"] not in Commands.prebuilt:
