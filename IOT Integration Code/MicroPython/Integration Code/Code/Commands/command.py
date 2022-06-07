@@ -13,11 +13,7 @@ class Command():
         else:
             return f"Command(..., name={self.name})"
 
-    def __repr__(self):
-        if self.name is None:
-            return f"Command(...)"
-        else:
-            return f"Command(..., name={self.name})"
+    def __repr__(self): self.__str__()
 
 
 def _timeoutWrapper(coroutine):
