@@ -46,8 +46,10 @@ async def __commandQueueTask():
     except Exception as exc:
         logger(f"#<\t__commandQueueTask Stopped: {exc}")
 
+# TODO: Add '/' and '' ending support, maybe app.routes to implement /.../v__meta__ and /.../v__meta__/
 
-@app.route('/api/v__meta__', methods=["GET"])
+
+@app.routes('/api/v__meta__/', methods=["GET"])
 async def dump_all(request):
     return json.dumps({"__meta__": META_DEFAULT, "payload": {"__version__": API_CONST, "routes": [x for x in app.url_map]}})
 
