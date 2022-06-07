@@ -22,10 +22,12 @@ commandQueue = []
 __queuePollPeriod = 5
 __queueStop = False
 
+logger = print
+
 
 @app.route('/')
 async def ping(request):
-    print("YIPEE!")
+    logger("YIPEE!")
     return json.dumps({"__meta__": META_DEFAULT, "payload": {"ping": "pong"}})
 
 
@@ -42,7 +44,7 @@ async def __commandQueueTask():
                 __queueStop = False
                 break
     except Exception as exc:
-        print(f"#<\t__commandQueueTask Stopped: {exc}")
+        logger(f"#<\t__commandQueueTask Stopped: {exc}")
 
 
 @app.route('/api/v__meta__', methods=["GET"])
@@ -52,7 +54,7 @@ async def dump_all(request):
 
 @app.route(f'{API_CONST}/execute-command/<string:command_name>')
 async def request_execute_command(request, *, command_name=Commands.prebuilt[...]):
-    print("## Command queue request ...")
+    logger("## Command queue request ...")
     if "prebuilt" in request.args:
         if request.args["prebuilt"] not in Commands.prebuilt:
             return f"Error Code 50something\nUnknown command {request.args['prebuilt']=}"
@@ -61,8 +63,8 @@ async def request_execute_command(request, *, command_name=Commands.prebuilt[...
         if "time" in request.args:
             _time = int(request.args["time"])
         else:
-            print(f"#>\tDefaulting to {_time=}")
-        print(f"### Queueing task {requested_command.name}")
+            logger(f"#>\tDefaulting to {_time=}")
+        logger(f"### Queueing task {requested_command.name}")
         commandQueue.append([requested_command, [], {"time": _time}])
         return json.dumps({"__meta__": META_DEFAULT, "payload": {"status": "queued", "time": _time, "requested_command.name": requested_command.name}})
     else:
@@ -71,7 +73,7 @@ async def request_execute_command(request, *, command_name=Commands.prebuilt[...
 
 @app.route(f"{API_CONST}/search-commands/<string:search>")
 async def request_find_commands(request, *, search="*"):
-    print(f"##! Command search requested ...")
+    logger(f"##! Command search requested ...")
     if search == "*":
         return json.dumps({"__meta__": META_DEFAULT, "payload": {"commands": [x for x in Commands.prebuilt.values()]}})
     else:
@@ -89,13 +91,17 @@ async def request_find_commands(request, *, search="*"):
 
 
 @_timeoutWrapper
-async def start_server():
+async def start_server(*, port=8080, host="0.0.0.0", **kwargs):
+    global logger  # Easiest (hacky) way to get the logger to work
+    if "logger" in kwargs:
+        logger = kwargs["logger"]
+        logger(f"#>\tLogger set to {logger=}")
     try:
-        print(f"#>\tStarting microdot server --async ...")
+        logger(f"#>\tStarting microdot server --async ...")
         await asio.gather(__commandQueueTask(), app.start_server(host='0.0.0.0', port=420, debug=True))
     finally:
         app.shutdown()
-        print(f"#>\tShutdown microdot server --async")
+        logger(f"#>\tShutdown microdot server --async")
 
 
 commands = {
