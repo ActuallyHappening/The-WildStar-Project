@@ -24,7 +24,7 @@ __queueStop = False
 
 
 @app.route('/')
-async def dump(request, methods=["GET"]):
+async def ping(request):
     print("YIPEE!")
     return json.dumps({"__meta__": META_DEFAULT, "payload": {"ping": "pong"}})
 
@@ -43,6 +43,11 @@ async def __commandQueueTask():
                 break
     except Exception as exc:
         print(f"#<\t__commandQueueTask Stopped: {exc}")
+
+
+@app.route('/api/v__meta__/', methods=["GET"])
+async def dump_all(request):
+    return json.dumps({"__meta__": META_DEFAULT, "payload": {"__version__": API_CONST, "routes": [x for x in app.url_map]}})
 
 
 @app.route(f'{API_CONST}/execute-command/')
@@ -64,11 +69,11 @@ async def request_execute_command(request):
         return "Error Code 40something\nUnknown options, use `.../execute-command/?prebuilt=Blink Builtin`\nWOW this API is COOL AS F**K!"
 
 
-@app.route(f"{API_CONST}/search-commands/<re:search>")
+@app.route(f"{API_CONST}/search-commands/<string:search>")
 async def request_find_commands(request, *, search="*"):
     print(f"##! Command search requested ...")
     if search == "*":
-        return json.dumps({"__meta__": META_DEFAULT, "payload": {"commands": Commands.prebuilt}})
+        return json.dumps({"__meta__": META_DEFAULT, "payload": {"commands": [x for x in Commands.prebuilt.values()]}})
     else:
         try:
             search = re.compile(search)
