@@ -53,7 +53,7 @@ async def dump_all(request):
 
 
 @app.route(f'{API_CONST}/execute-command/<string:command_name>')
-async def request_execute_command(request, *, command_name=Commands.prebuilt[...]):
+async def request_execute_command(request, *, command_name="Nothing"):
     logger("## Command queue request ...")
     if "prebuilt" in request.args:
         if request.args["prebuilt"] not in Commands.prebuilt:

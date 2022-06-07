@@ -17,5 +17,6 @@ async def Wait(*, time=10, logger=print, **overflow):
 
 commands = {
     ...: Command(Nothing),
+    "Nothing": Command(Nothing),
     "Wait": Command(Wait),
 }
