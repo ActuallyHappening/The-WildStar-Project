@@ -39,7 +39,7 @@ async def _execute(commands, *, time=..., logger=print, **overflow):
     if time is ...:
         logger(f"#> Note: {time=}, is not set, running until completion")
     logger(f"## Holding tasks ({time=} seconds) ...")
-    await asio.gather(*[command.asioDo(time=time) for command in commands])
+    await asio.gather(*[command.asioDo(time=time, logger=logger) for command in commands])
     logger("## Released tasks.")
 
 

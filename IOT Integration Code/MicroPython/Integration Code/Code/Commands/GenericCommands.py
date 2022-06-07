@@ -4,7 +4,7 @@ from .command import Command, _timeoutWrapper
 
 
 @_timeoutWrapper
-async def Nothing(*, logger=print):
+async def Nothing(*, logger=print, **kwargs):
     logger("#<> Nothing called :)")
 
 
