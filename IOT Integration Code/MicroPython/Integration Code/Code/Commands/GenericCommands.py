@@ -14,9 +14,11 @@ async def Wait(*, time=10, logger=print, **overflow):
         logger(f"OH oh, overflow detected in func Wait: {overflow=}")
     logger(f"#> Waiting {time=} seconds")
     time.sleep(time)
+    logger(f"#< Finished {time=} seconds wait")
 
 commands = {
     ...: Command(Nothing),
+    str(...): Command(Nothing),
     "Nothing": Command(Nothing),
     "Wait": Command(Wait),
 }
