@@ -9,7 +9,7 @@ import os
 import micropython
 import machine
 
-from ble_uart_peripheral import BLEUART
+from .ble_uart_peripheral import BLEUART
 
 _MP_STREAM_POLL = const(3)
 _MP_STREAM_POLL_RD = const(0x0001)
