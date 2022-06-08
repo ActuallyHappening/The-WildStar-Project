@@ -93,14 +93,15 @@ async def blink_blue(**kwargs):
 
 
 commands = {
-    "Blink Builtin": Command(blink_builtin),
-    "Blink Red": Command(blink_red),
-    "Blink Yellow": Command(blink_yellow),
-    "Blink Green": Command(blink_green),
-    "Blink Blue": Command(blink_blue),
-    "Pin On": Command(pin_on),
-    "Pin Off": Command(pin_off),
-    "Led On": Command(led_on),
-    "Led Off": Command(led_off),
-    "Blink Pin": Command(blink_pin),
+    "Machine Blink Builtin": Command(blink_builtin),
+    "Machine Blink Red": Command(blink_red),
+    "Machine Blink Yellow": Command(blink_yellow),
+    "Machine Blink Green": Command(blink_green),
+    "Machine Blink Blue": Command(blink_blue),
+    "Machine Blink Pin": Command(blink_pin),
+    "Machine Blink LED": Command(blink_led),
+    "Machine Pin On": Command(pin_on),
+    "Machine Pin Off": Command(pin_off),
+    "Machine Led On": Command(led_on),
+    "Machine Led Off": Command(led_off),
 }

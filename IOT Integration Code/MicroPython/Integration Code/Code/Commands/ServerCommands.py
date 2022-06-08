@@ -107,5 +107,5 @@ async def start_server(*, port=8080, host="0.0.0.0", **kwargs):
 
 
 commands = {
-    "npm run dev": Command(start_server),
+    "Web Server Host Begin": Command(start_server),
 }

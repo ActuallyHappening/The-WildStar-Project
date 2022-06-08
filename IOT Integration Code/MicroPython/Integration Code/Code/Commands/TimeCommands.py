@@ -38,6 +38,6 @@ async def second_timer(*, __prefix__="Second Triggered", logger=print, **kwargs)
     await time_trigger(interval=1, __prefix__=__prefix__, logger=logger, **kwargs)
 
 commands = {
-    "Seconds Logger": Command(second_logger),
-    "Seconds Timer": Command(second_timer),
+    "Start Logger Seconds": Command(second_logger),
+    "Start Timer Second": Command(second_timer),
 }
