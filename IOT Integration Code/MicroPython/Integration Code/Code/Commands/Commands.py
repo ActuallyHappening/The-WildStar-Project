@@ -12,6 +12,9 @@ prebuilt = dict()
 def importSet(commands):
     for name, command in commands.items():
         prebuilt[name] = command
+        if type(command) is not CommandClass:
+            raise ValueError(
+                f"### ERROR: Command {name} is not of type CommandClass")
         if command.name is None:
             # Set name of command to handle used to call it :)
             command.name = str(name)
@@ -22,7 +25,7 @@ importSet(TimeCommands.commands)
 importSet(ServerCommands.commands)
 
 
-async def _execute(commands, *, time=..., logger=print, **overflow):
+async def _execute(commands, *, __constructor__={}, time=..., logger=print, **overflow):
     if len(overflow) > 0:
         logger(f"OH oh, overflow detected in func _execute: {overflow=}")
     if type(commands) is not list:
@@ -39,7 +42,7 @@ async def _execute(commands, *, time=..., logger=print, **overflow):
     if time is ...:
         logger(f"#> Note: {time=}, is not set, running until completion")
     logger(f"## Holding tasks ({time=} seconds) ...")
-    await asio.gather(*[command.asioDo(time=time, logger=logger) for command in commands])
+    await asio.gather(*[command.asioDo(time=time, logger=logger, __constructor__=__constructor__) for command in commands])
     logger("## Released tasks.")
 
 
