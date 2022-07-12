@@ -17,6 +17,8 @@ print("YAY! main.py is executing ...")
 
 def ThetaHandler(msg, logger=print, **kwargs):
     logger(f"$< BluetoothCommands Project THETA received: {msg}")
+    if msg == "Blink":
+        cmds.execute(cmds.prebuilt["Machine Blink Builtin"], time=5)
 
 # cmds.execute(cmds.prebuilt["npm run dev"])
 cmds.execute(cmds.prebuilt["Bluetooth Project Theta"], __constructor__=ThetaHandler)

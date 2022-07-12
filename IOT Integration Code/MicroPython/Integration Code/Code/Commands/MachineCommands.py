@@ -99,7 +99,7 @@ commands = {
     "Machine Blink Green": Command(blink_green),
     "Machine Blink Blue": Command(blink_blue),
     "Machine Blink Pin": Command(blink_pin),
-    "Machine Blink LED": Command(blink_led),
+    "Machine Blink Led": Command(blink_led),
     "Machine Pin On": Command(pin_on),
     "Machine Pin Off": Command(pin_off),
     "Machine Led On": Command(led_on),
