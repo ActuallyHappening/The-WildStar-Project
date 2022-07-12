@@ -12,10 +12,11 @@ import time
 
 print("YAY! main.py is executing ...")
 
-networking.getGoodWIFI()
-networking.printStatus()
+# networking.getGoodWIFI()
+# networking.printStatus()
 
-cmds.execute(cmds.prebuilt["npm run dev"])
+# cmds.execute(cmds.prebuilt["npm run dev"])
+cmds.execute(cmds.prebuilt["Bluetooth Begin"])
 
 
 """
