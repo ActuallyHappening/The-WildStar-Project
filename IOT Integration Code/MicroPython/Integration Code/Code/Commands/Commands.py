@@ -4,6 +4,7 @@ import uasyncio as asio
 from . import MachineCommands
 from . import TimeCommands
 from . import ServerCommands
+from . import BluetoothCommands
 from .command import Command as CommandClass
 
 prebuilt = dict()
@@ -23,7 +24,7 @@ def importSet(commands):
 importSet(MachineCommands.commands)
 importSet(TimeCommands.commands)
 importSet(ServerCommands.commands)
-
+importSet(BluetoothCommands.commands)
 
 async def _execute(commands, *, __constructor__={}, time=..., logger=print, **overflow):
     if len(overflow) > 0:
