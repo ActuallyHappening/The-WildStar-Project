@@ -95,7 +95,7 @@ def _begin(callback=None):
     import time
 
     ble = bluetooth.BLE()
-    uart = BLEUART(ble)
+    uart = BLEUART(ble, name="Smartguy88-BLE-UART")
 
     def __uartDecoderDecorator(func):
         def __uartDecodedDecorator():

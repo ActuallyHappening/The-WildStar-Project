@@ -76,7 +76,7 @@ class BLEUARTStream(io.IOBase):
 
 def start():
     ble = bluetooth.BLE()
-    uart = BLEUART(ble, name="mpy-repl")
+    uart = BLEUART(ble, name="Smartguy88-ESP32-CY")
     stream = BLEUARTStream(uart)
 
     os.dupterm(stream)

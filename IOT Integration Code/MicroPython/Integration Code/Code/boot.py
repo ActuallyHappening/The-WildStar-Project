@@ -1,5 +1,5 @@
 import webrepl
-from Helper import networking
+# from Helper import networking
 
 import extensions  # Extends the base libraries
 
