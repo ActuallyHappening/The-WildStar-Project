@@ -1,56 +1,13 @@
 from Commands import Commands as cmds
-import sys
-import gc
-import os
-import secrets
-
 from Helper import networking
 
-import json
-import time
-#from umqtt.robust import MQTTClient
 
-print("YAY! main.py is executing ...")
-
-# networking.getGoodWIFI()
-# networking.printStatus()
 
 def ThetaHandler(msg, logger=print, **kwargs):
     logger(f"$< BluetoothCommands Project THETA received: {msg}")
-    if msg == "Blink":
-        cmds.execute(cmds.prebuilt["Machine Blink Builtin"], time=5)
+    if msg[:5] == "Blink":
+        cmds.execute(cmds.prebuilt["Machine Blink Builtin"], time=int(msg[5:]))
 
 # cmds.execute(cmds.prebuilt["npm run dev"])
 cmds.execute(cmds.prebuilt["Bluetooth Project Theta"], __constructor__=ThetaHandler)
 
-
-"""
-def receivedMessage(topic, msg):
-    print(f"Received from {topic}: \n{msg}")
-    try:
-        message = msg.decode('utf-8')
-        data = json.loads(message)
-    except ValueError as exc:
-        print(f"Received message is not json :( {exc}")
-        return
-    print(f"Received Command: {data}")
-    payload = data["payload"]
-    _project, _action, _input = payload["Project"], payload["Action"], payload["Input"]
-    execute_command(_project, _action, _input)  # , logger=AIO.publish)
-
-
-AIO.begin(receivedMessage)
-AIO.subscribe("GET")
-AIO.subscribe("POST")
-AIO.publish("Hello World!")
-
-try:
-    while True:
-        #print("Checking ...")
-        AIO.check(debug=False)
-        time.sleep(1)
-except Exception as exc:
-    print(f"Exiting main.py main loop: {exc}")
-    AIO.disconnect()
-    raise exc
-"""

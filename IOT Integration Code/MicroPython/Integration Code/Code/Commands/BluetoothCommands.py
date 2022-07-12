@@ -21,11 +21,16 @@ __implicitRetry = False
 
 
 @_timeoutWrapper
-async def send(msg, *, logger=dualUartPrint, **kwargs):
+async def send(msg=..., *, __constructor__=..., logger=dualUartPrint, **kwargs):
     global __implicitRetry
+    if msg is ...:
+      msg = __constructor__
+      if __constructor__ is ...:
+        raise ValueError("No message given (no __constructor__ specified either)")
+
     logger(f"!> BluetoothCommands send: {msg}")
     if __uart:
-        __uart.write(f"{kwargs}\n")
+        __uart.write(f"{msg}\n")
     else:
         if __implicitRetry:
             logger("!!> No uart connected: Already retried! FAILED BLUETOOTH")
