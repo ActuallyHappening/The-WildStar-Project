@@ -19,9 +19,7 @@ def ThetaHandler(msg, logger=print, **kwargs):
     logger(f"$< BluetoothCommands Project THETA received: {msg}")
 
 # cmds.execute(cmds.prebuilt["npm run dev"])
-cmds.execute(cmds.prebuilt["Bluetooth Project Theta"], __constructor__={
-  "handler": ThetaHandler,
-})
+cmds.execute(cmds.prebuilt["Bluetooth Project Theta"], __constructor__=ThetaHandler)
 
 
 """
