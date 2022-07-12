@@ -15,8 +15,13 @@ print("YAY! main.py is executing ...")
 # networking.getGoodWIFI()
 # networking.printStatus()
 
+def ThetaHandler(msg, logger=print, **kwargs):
+    logger(f"$< BluetoothCommands Project THETA received: {msg}")
+
 # cmds.execute(cmds.prebuilt["npm run dev"])
-cmds.execute(cmds.prebuilt["Bluetooth Begin"])
+cmds.execute(cmds.prebuilt["Bluetooth Project Theta"], __constructor__={
+  "handler": ThetaHandler,
+})
 
 
 """
