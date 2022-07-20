@@ -24,7 +24,7 @@ bot = commands.Bot(
 
 @bot.command()
 async def test(ctx, *args):
-    ctx.send(f"__test__: \n{args}")
+    await ctx.send(f"__test__: \n{args}")
 
 
 @bot.command()
@@ -56,20 +56,25 @@ async def on_message(message):
     if message.author == bot.user:
         logger.debug(f"{message.author=} RECURSIVE")
         return
-
-    message.content = message.content.replace('\\"', '"')
-    try:
-        data = json.loads(message.content)
-    except json.JSONDecodeError as exc:
-        logger.debug("Message not json :)")
-        logger.debug(exc)
-        logger.debug(f"{message.content}")
+    
+    if message.content.startswith("$"):
+        logger.debug(f"{message.content=}")
+        await bot.process_commands(message)
         return
-        # raise exc
-    payload = data["payload"]
-    logger.debug(f"{payload=}")
-    _project, _action, _input = payload["Project"], payload["Action"], payload["Input"]
-    passOn(_project, _action, _input, ctx=message.channel)
+
+    # message.content = message.content.replace('\\"', '"')
+    # try:
+    #     data = json.loads(message.content)
+    # except json.JSONDecodeError as exc:
+    #     logger.debug("Message not json :)")
+    #     logger.debug(exc)
+    #     logger.debug(f"{message.content} << Message :)")
+    #     return
+    #     # raise exc
+    # payload = data["payload"]
+    # logger.debug(f"{payload=}")
+    # _project, _action, _input = payload["Project"], payload["Action"], payload["Input"]
+    # passOn(_project, _action, _input, ctx=message.channel)
 
 
 def passOn(project, action, _input, *, ctx=None):
