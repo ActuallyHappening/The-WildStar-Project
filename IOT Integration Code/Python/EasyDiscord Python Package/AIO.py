@@ -24,7 +24,8 @@ async def AIOsend(ctx, group: str, feed: str, *, data):
 @commands.command()
 async def AIOreceive(ctx, group: str, feed: str):
     fullName = group + "." + feed
-    await ctx.send(f"**Received from {fullName=}:** \n{aio.send(fullName)}")
+    data = aio.receive(fullName).value
+    await ctx.send(f"**Received from {fullName=}:** \n{data=}")
 
 
 def setup(bot):
